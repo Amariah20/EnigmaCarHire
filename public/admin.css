@@ -98,3 +98,8 @@ div.content {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
+.table a i{
+  text-decoration:  none!important;
+  color: black;
+}

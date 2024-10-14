@@ -82,7 +82,7 @@ class AdminController extends Controller
 
     public function deleteVehicle($vehicle_id){
 
-        $vehicle= Vehicle::where('vehicle_id', $vehicle_id);
+        $vehicle= Vehphpicle::where('vehicle_id', $vehicle_id);
         $vehicle->delete();
 
         return redirect()->route('vehicles')->with('success', 'Vehicle Deleted Successfully');

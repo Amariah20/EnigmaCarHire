@@ -22,4 +22,9 @@ class Vehicle extends Model
     ];
 
     protected $primaryKey = 'vehicle_id';
+
+    //defining rela to reservation model
+    public function reservations(){
+        return $this->hasMany(Reservation::class, 'vehicle_id', 'vehicle_id');
+    }
 }

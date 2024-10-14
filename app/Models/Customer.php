@@ -22,4 +22,9 @@ class Customer extends Model
     ];
 
     protected $primaryKey = 'customer_id';
+
+    //defining rela to reservation class
+    public function reservations(){
+        return $this->hasMany(Reservation::class, 'customer_id', 'customer_id');
+    }
 }

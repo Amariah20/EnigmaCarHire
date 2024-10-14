@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 
@@ -82,13 +83,19 @@ class AdminController extends Controller
 
     public function deleteVehicle($vehicle_id){
 
-        $vehicle= Vehphpicle::where('vehicle_id', $vehicle_id);
+        $vehicle= Vehicle::where('vehicle_id', $vehicle_id);
         $vehicle->delete();
 
         return redirect()->route('vehicles')->with('success', 'Vehicle Deleted Successfully');
 
 
 
+    }
+
+    public function showReservations(){
+
+        $reservations = Reservation::with('vehicle','customer')->get();
+        return view('admin-panel.reservations', compact('reservations'));
     }
 
 

@@ -28,6 +28,7 @@
 <table class="table table-hover">
   <thead class="thead-dark">
     <tr>
+     <th scope="col">Vehicle ID</th>
       <th scope="col">Vehicle Name</th>
       <th scope="col">Make & Model </th>
       <th scope="col">License Plate</th>
@@ -46,6 +47,7 @@
   @foreach($vehicles as $vehicle)
     <tr>
       
+    <td>{{$vehicle->vehicle_id}}</td>
       <td>{{$vehicle->vehicle_name}}</td>
       <td> {{$vehicle->make_model}}</td>
       <td>{{$vehicle->license_plate}}</td>

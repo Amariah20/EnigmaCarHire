@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,6 +9,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::get('/addCustomer', [CustomerController::class, 'addCustomer'])->name('addCustomer');
+Route::post('/storeCustomer',[CustomerController::class, 'storeCustomer'])->name('storeCustomer');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

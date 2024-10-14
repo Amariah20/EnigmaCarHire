@@ -98,5 +98,16 @@ class AdminController extends Controller
         return view('admin-panel.reservations', compact('reservations'));
     }
 
+    public function editReservation(Request $req, $reservation_id){
+
+        $reservation= Reservation::where('reservation_id', $reservation_id)->first();
+      
+
+        return view('admin-panel.editReservation', compact('reservation'));
+
+
+
+    }
+
 
 }

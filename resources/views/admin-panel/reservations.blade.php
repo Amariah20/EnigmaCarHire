@@ -60,6 +60,7 @@
       <td> {{$reservation->return}}</td>
       <td> {{$reservation->total_price}}</td>
       <td> {{$reservation->status}}</td>
+      <td><a href="{{route('editReservation', ['reservation_id'=>$reservation->reservation_id])}}"><i class="bi bi-pen-fill"></i></a></td>
 
 </tr>
  @endforeach

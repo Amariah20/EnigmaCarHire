@@ -25,3 +25,4 @@ Route::post('/storeEditVehicle/{vehicle_id}', [AdminController::class, 'storeEdi
 Route::get('/deleteVehicle/{vehicle_id}', [AdminController::class, 'deleteVehicle'])->name('deleteVehicle');
 
 Route::get('/reservations', [AdminController::class, 'showReservations'])->name('reservations');
+Route::get('/editReservation/{reservation_id', [AdminController::class, 'editReservation'])->name('editReservation');

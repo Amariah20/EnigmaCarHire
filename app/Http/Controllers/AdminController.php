@@ -252,6 +252,11 @@ class AdminController extends Controller
 
     public function storeMaintenance(Request $req){
 
+
+        $req->validate([
+             'due_date' => 'required|date|unique:maintenances,due_date', // Ensure unique due_date across all maintenance records
+        ]);
+        
         $maintenance= new \App\Models\Maintenance();
         $maintenance->vehicle_id = $req->vehicle_id;
         $maintenance->maintenance_type = $req->maintenance_type;

@@ -28,3 +28,6 @@ Route::get('/reservations', [AdminController::class, 'showReservations'])->name(
 Route::get('/editReservation/{reservation_id}', [AdminController::class, 'editReservation'])->name('editReservation');
 Route::post('/storeEditReservation/{reservation_id}', [AdminController::class, 'storeEditReservation'])->name('storeEditReservation');
 Route::get('/deleteReservation/{reservation_id}', [AdminController::class, 'deleteReservation'])->name('deleteReservation');
+
+
+Route::get('/payments', [AdminController::class, 'showPayments'])->name('payments');

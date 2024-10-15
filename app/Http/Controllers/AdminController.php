@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
@@ -176,9 +177,15 @@ class AdminController extends Controller
         return redirect()->route('reservations')->with('success', 'Reservation Deleted Successfully');
 
 
-
     }
 
+    public function showPayments(){
+
+        $payments = Payment::with('reservation')->get();
+        return view('admin-panel.payments', compact('payments'));
+
+         
+    }
 
 
 }

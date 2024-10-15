@@ -40,7 +40,7 @@
       <th scope="col">Total Price</th>
       <th scope="col">Status</th>
       <th scope="col">Edit</th>
-      <th scope="col">Delete</th>
+      <!--<th scope="col">Delete</th>-->
       
     </tr>
   </thead>
@@ -61,7 +61,7 @@
       <td> {{$reservation->total_price}}</td>
       <td> {{$reservation->status}}</td>
       <td><a href="{{route('editReservation', ['reservation_id'=>$reservation->reservation_id])}}"><i class="bi bi-pen-fill"></i></a></td>
-      <td><a href="{{route('deleteReservation', ['reservation_id'=>$reservation->reservation_id])}}"><i class="bi bi-trash-fill"></a></i></td>
+     <!-- <td><a href="{{route('deleteReservation', ['reservation_id'=>$reservation->reservation_id])}}"><i class="bi bi-trash-fill"></a></i></td>--> <!--no need to delete reservations. simply mark as cancelled-->
    
 </tr>
  @endforeach

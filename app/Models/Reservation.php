@@ -21,4 +21,10 @@ class Reservation extends Model
     public function customer(){
         return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
     }
+
+    public function additionalDriver()
+    {
+        return $this->hasOne(AdditionalDriver::class, 'reservation_id');
+    }
+
 }

@@ -52,10 +52,9 @@
       <td>{{$reservation->reservation_id}}</td>
       <td> {{$reservation->customer_id}}</td>
       <td>{{$reservation->customer ? $reservation->customer->name : 'N/A'}}</td>
-      <td> N/A</td> <!--later query additional driver table-->
+      <td>{{ $reservation->additionalDriver ? $reservation->additionalDriver->name : 'N/A' }}</td> <!-- Display additional driver -->
       <td>{{$reservation->vehicle_id}}</td>
       <td> {{ $reservation->vehicle ? $reservation->vehicle->vehicle_name : 'N/A' }}</td>
-
       <td> {{$reservation->reservation_date}}</td>
       <td> {{$reservation->pick_up}}</td>
       <td> {{$reservation->return}}</td>

@@ -95,7 +95,7 @@ class AdminController extends Controller
 
     public function showReservations(){
 
-        $reservations = Reservation::with('vehicle','customer')->get();
+        $reservations = Reservation::with('vehicle','customer', 'additionalDriver')->get();
         return view('admin-panel.reservations', compact('reservations'));
     }
 

@@ -334,7 +334,7 @@ class AdminController extends Controller
         // Update the vehicle status based on the maintenance status
         $vehicle = Vehicle::where('vehicle_id', $maintenance->vehicle_id)->first();
 
-
+        if ($vehicle->status != 'rented'){
 
         if ($req->status === 'In progress') {
             // If maintenance is "in progress", set the vehicle status to "in service"
@@ -349,6 +349,7 @@ class AdminController extends Controller
 
         // Save the updated vehicle status
         $vehicle->update();
+    }
 
         return redirect()->back()->with('success', 'Maintenance Edited Successfully');
 

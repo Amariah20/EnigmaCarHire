@@ -9,13 +9,41 @@ use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+
 
 class AdminController extends Controller
 {
     public function show(){
 
-        return view('admin-panel.dashboard');
+
+        //to show outstanding payment on dashboard
+        //THIS IS WRONG. THE MATH IS NOT MATHING. REDO
+
+        $OutstandingPayments = Payment::whereColumn('total_price', '>', 'total_paid') // Only where outstanding balance exists
+        ->sum(DB::raw('total_price - total_paid')); // Calculate sum of the differences
+
+
+        
+
+
+        $currentDate = Carbon::now();
+    
+        // Get the date 7 days from now
+        $nextWeekDate = Carbon::now()->addDays(7);
+        
+        // Fetch maintenance records with due_date between now and next week
+            $MaintenenacedueNextWeek = Maintenance::whereBetween('due_date', [$currentDate, $nextWeekDate])
+                                     ->whereNotIn('status', ['completed', 'in progress', 'Cancelled']) 
+                                     ->get();
+
+         $vehicles = Vehicle::all();
+      
+
+
+        return view('admin-panel.dashboard', compact('MaintenenacedueNextWeek', 'vehicles', 'OutstandingPayments'));
     }
+
 
     public function showVehicles(){
 

@@ -55,7 +55,7 @@
   @foreach($maintenances as $maintenance)
     <tr>
       
-    <td>{{$maintenance->maintenance_id}}</td>
+        <td>{{$maintenance->maintenance_id}}</td>
       <td>{{$maintenance->vehicle_id}}</td>
       <td> {{ $maintenance->vehicle ? $maintenance->vehicle->vehicle_name : 'N/A' }}</td>
       <td>{{$maintenance->maintenance_type}}</td>

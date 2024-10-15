@@ -116,7 +116,9 @@ class AdminController extends Controller
     public function storeEditReservation(Request $req, $reservation_id){
 
         
-        $reservation = Reservation::where('reservation_id', $reservation_id)->first();
+        //$reservation = Reservation::where('reservation_id', $reservation_id)->first();
+        $reservation = Reservation::with('additionalDriver')->where('reservation_id', $reservation_id)->first();
+    
         
         
         $reservation->vehicle_id = $req->vehicle_id;
@@ -149,8 +151,18 @@ class AdminController extends Controller
             $reservation->total_price = $req->total_price;
         }
 
+        
         // Save the updated reservation
         $reservation->update();
+
+
+        // Check if an additional driver exists and update the name
+    if ($reservation->additionalDriver) {
+        $additionalDriver = $reservation->additionalDriver;
+        $additionalDriver->name = $req->additional_driver; // Use the input from the form
+        $additionalDriver->save(); // Save the updated additional driver
+    }
+
 
         // Redirect back to reservations with success message
         return redirect()->route('reservations')->with('success', 'Reservation Edited Successfully');

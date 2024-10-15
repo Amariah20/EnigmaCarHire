@@ -41,7 +41,7 @@
   </div>
   <div class="mb-3">
     <label class="form-label">Additional Driver</label> <!--later connect to additional driver, and fix to update additional driver in respective table too-->
-    <input type="text" class="form-control" name="additional_driver" value="N/A" readonly> 
+    <input type="text" class="form-control" name="additional_driver" value="{{ $reservation->additionalDriver ? $reservation->additionalDriver->name : 'N/A' }}" required> 
   </div>
   <div class="mb-3">
         <label class="form-label">Vehicle Name</label>

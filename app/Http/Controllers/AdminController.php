@@ -170,7 +170,7 @@ class AdminController extends Controller
 
     public function deleteReservation($reservation_id){
 
-        $reservation= Vehicle::where('vehicle_id', $reservation_id);
+        $reservation= Reservation::where('reservation_id', $reservation_id);
         $reservation->delete();
 
         return redirect()->route('reservations')->with('success', 'Reservation Deleted Successfully');

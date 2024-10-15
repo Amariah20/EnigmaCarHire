@@ -57,7 +57,11 @@
     <tr>
       
       <td>{{$payment->payment_id}}</td>
-      <td>{{$payment->reservation_id}}</td>
+      <td>
+        <a href="{{ route('viewReservation', ['reservation_id' => $payment->reservation_id]) }}">
+          {{ $payment->reservation_id }}
+        </a>
+      </td>
       <td>{{ $payment->reservation ? $payment->reservation->total_price : 'N/A' }}</td>
       <td>{{ $payment->total_paid }}</td> 
       <td>{{$payment->payment_date}}</td>

@@ -79,7 +79,7 @@ class AdminController extends Controller
 
         $vehicle->update();
 
-        return redirect()->route('vehicles')->with('success', 'Vehicle Edited Successfully');
+        return redirect()->back()->with('success', 'Vehicle Edited Successfully');
 
     }
 
@@ -166,7 +166,7 @@ class AdminController extends Controller
 
 
         // Redirect back to reservations with success message
-        return redirect()->route('reservations')->with('success', 'Reservation Edited Successfully');
+        return redirect()->back()->with('success', 'Reservation Edited Successfully');
     }
 
     public function deleteReservation($reservation_id){
@@ -221,8 +221,27 @@ class AdminController extends Controller
 
         $payment->update();
 
-        return redirect()->route('payments')->with('success', 'Payment Edited Successfully');
+        return redirect()->back()->with('success', 'Payment Edited Successfully');
 
     }
+
+
+    //when admin clicks on reservation ID from payments tab, this controller is run
+    public function viewReservation($reservation_id) { 
+
+        
+        $reservation = Reservation::with('additionalDriver', 'payment')->where('reservation_id', $reservation_id)->first();
+
+        //$reservation = Reservation::find($reservation_id);
+    
+        if (!$reservation) {
+            return redirect()->back()->withErrors('Reservation not found.');
+        }
+
+        $payment = $reservation->payment;
+    
+        return view('admin-panel.viewReservation', compact('reservation', 'payment'));
+    }
+    
 
 }

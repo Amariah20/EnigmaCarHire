@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Maintenance;
 use App\Models\Payment;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -243,5 +244,28 @@ class AdminController extends Controller
         return view('admin-panel.viewReservation', compact('reservation', 'payment'));
     }
     
+    public function addMaintenance()
+    {
+        $vehicles = Vehicle::all(); // Fetch all vehicles from the database
+        return view('admin-panel.addMaintenance', compact('vehicles')); // Pass the vehicles to the view
+    }
+
+    public function storeMaintenance(Request $req){
+
+        $maintenance= new \App\Models\Maintenance();
+        $maintenance->vehicle_id = $req->vehicle_id;
+        $maintenance->maintenance_type = $req->maintenance_type;
+        $maintenance->description = $req->description;
+        $maintenance->due_date = $req->due_date;
+        $maintenance->price = $req->price;
+        $maintenance->status = $req->status;
+
+        $maintenance->save();
+
+        return redirect()->back()->with('success', 'Maintenance Added Successfully');
+
+
+    }
+
 
 }

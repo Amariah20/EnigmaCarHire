@@ -35,3 +35,6 @@ Route::get('/editPayment/{payment_id}', [AdminController::class, 'editPayment'])
 Route::post('/storeEditPayment/{payment_id}', [AdminController::class, 'storeEditPayment'])->name('storeEditPayment');
 
 Route::get('/viewReservation/{reservation_id}', [AdminController::class, 'viewReservation'])->name('viewReservation');
+
+Route::get('/addMaintenance', [AdminController::class, 'addMaintenance'])->name('addMaintenance');
+Route::post('/storeMaintenance', [AdminController::class, 'storeMaintenance'])->name('storeMaintenance');

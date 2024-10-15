@@ -41,6 +41,7 @@
   <div class="mb-3">
   <label class="form-label" >Type</label>
   <select name="type" class="form-control" required>
+      <option value="">Select Type</option>
       <option value="SUV">SUV</option>
       <option value="Sedan">Sedan</option>
       <option value="Hatchback">Hatchback</option>
@@ -57,13 +58,14 @@
   <div class="mb-3">
     <label class="form-label">Transmission</label>
     <select name=transmission class="form-control" required>
+        <option value="">Select Transmission</option>
         <option value="automatic">Automatic</option>
         <option value="manual">Manual</option>
     </select>
   </div>
   <div class="mb-3">
     <label class="form-label">Daily Rate</label>
-    <input type="number" class="form-control" name="dailyrate" required>
+    <input type="number" step="0.01" class="form-control" name="dailyrate" required>
   </div>
  
   <div class="mb-3">

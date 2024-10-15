@@ -16,6 +16,7 @@ class Maintenance extends Model
         'price',
         'status',
         'vehicle_id',
+        'description'
     ];
 
     protected $primaryKey = 'maintenance_id';

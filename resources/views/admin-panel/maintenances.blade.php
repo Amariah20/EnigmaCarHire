@@ -63,6 +63,8 @@
       <td>{{$maintenance->due_date}}</td>
       <td> SCR {{$maintenance->price}}</td>
       <td>{{$maintenance->status}}</td>
+      <td><a href="{{route('editMaintenance', ['maintenance_id'=>$maintenance->maintenance_id])}}"><i class="bi bi-pen-fill"></i></a></td>
+      <td><a href="{{route('deleteMaintenance',  ['maintenance_id'=>$maintenance->maintenance_id])}}"><i class="bi bi-trash-fill"></a></i></td>
     
 
    

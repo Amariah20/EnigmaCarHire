@@ -89,7 +89,7 @@ class AdminController extends Controller
         $vehicle= Vehicle::where('vehicle_id', $vehicle_id);
         $vehicle->delete();
 
-        return redirect()->route('vehicles')->with('success', 'Vehicle Deleted Successfully');
+        return redirect()->back()->with('success', 'Vehicle Deleted Successfully');
 
 
 
@@ -175,7 +175,7 @@ class AdminController extends Controller
         $reservation= Reservation::where('reservation_id', $reservation_id);
         $reservation->delete();
 
-        return redirect()->route('reservations')->with('success', 'Reservation Deleted Successfully');
+        return redirect()->back()->with('success', 'Reservation Deleted Successfully');
 
 
     }
@@ -276,6 +276,48 @@ class AdminController extends Controller
         $maintenance->save();
 
         return redirect()->back()->with('success', 'Maintenance Added Successfully');
+
+
+    }
+
+    public function editMaintenance($maintenance_id){
+
+        $maintenance= Maintenance::where('maintenance_id', $maintenance_id)->first();
+        $vehicles = Vehicle::all();
+      
+
+        return view('admin-panel.editMaintenance', compact('maintenance', 'vehicles'));
+
+    }
+
+    public function storeEditMaintenance(Request $req, $maintenance_id){
+
+        $req->validate([
+            'due_date' => 'required|date|unique:maintenances,due_date', // Ensure unique due_date across all maintenance records
+       ]);
+
+       $maintenance= Maintenance::where('maintenance_id', $maintenance_id)->first();
+
+        $maintenance->vehicle_id = $req->vehicle_id;
+        $maintenance->maintenance_type = $req->maintenance_type;
+        $maintenance->description = $req->description;
+        $maintenance->due_date = $req->due_date;
+        $maintenance->price = $req->price;
+        $maintenance->status = $req->status;
+
+        $maintenance->update();
+
+        return redirect()->back()->with('success', 'Maintenance Edited Successfully');
+
+    }
+
+    public function deleteMaintenance($maintenance_id){
+
+        $maintenance= Maintenance::where('maintenance_id', $maintenance_id);
+        $maintenance->delete();
+
+        return redirect()->back()->with('success', 'Maintenance Deleted Successfully');
+
 
 
     }

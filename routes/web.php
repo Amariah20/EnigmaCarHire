@@ -39,3 +39,6 @@ Route::get('/viewReservation/{reservation_id}', [AdminController::class, 'viewRe
 Route::get('/maintenances', [AdminController::class, 'showMaintenances'])->name('maintenances');
 Route::get('/addMaintenance', [AdminController::class, 'addMaintenance'])->name('addMaintenance');
 Route::post('/storeMaintenance', [AdminController::class, 'storeMaintenance'])->name('storeMaintenance');
+Route::get('/editMaintenance/{maintenance_id}', [AdminController::class, 'editMaintenance'])->name('editMaintenance');
+Route::post('/storeEditMaintenance/{maintenance_id}', [AdminController::class, 'storeEditMaintenance'])->name('storeEditMaintenance');
+Route::get('/deleteMaintenance/{maintenance_id}', [AdminController::class, 'deleteMaintenance'])->name('deleteMaintenance');

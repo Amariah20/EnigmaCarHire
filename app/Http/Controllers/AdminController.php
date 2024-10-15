@@ -244,6 +244,12 @@ class AdminController extends Controller
         return view('admin-panel.viewReservation', compact('reservation', 'payment'));
     }
     
+
+    public function showMaintenances(){
+        $maintenances = Maintenance::all();
+        return view ('admin-panel.maintenances', compact('maintenances'));
+    }
+
     public function addMaintenance()
     {
         $vehicles = Vehicle::all(); // Fetch all vehicles from the database
@@ -256,7 +262,7 @@ class AdminController extends Controller
         $req->validate([
              'due_date' => 'required|date|unique:maintenances,due_date', // Ensure unique due_date across all maintenance records
         ]);
-        
+
         $maintenance= new \App\Models\Maintenance();
         $maintenance->vehicle_id = $req->vehicle_id;
         $maintenance->maintenance_type = $req->maintenance_type;

@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -292,11 +293,32 @@ class AdminController extends Controller
 
     public function storeEditMaintenance(Request $req, $maintenance_id){
 
-        $req->validate([
-            'due_date' => 'required|date|unique:maintenances,due_date', // Ensure unique due_date across all maintenance records
-       ]);
+        $maintenance= Maintenance::where('maintenance_id', $maintenance_id)->first();
 
-       $maintenance= Maintenance::where('maintenance_id', $maintenance_id)->first();
+
+         // Initialize the validation rules array
+        $validationRules = [];
+
+        // Check if the due date has been changed
+        if ($req->has('due_date') && $req->due_date !== $maintenance->due_date) {
+        // Add the unique rule for due_date if it has been changed
+        $validationRules['due_date'] = [
+            'required',
+            'date',
+            Rule::unique('maintenances')->where(function ($query) use ($maintenance) {
+                return $query->where('maintenance_id', '!=', $maintenance->maintenance_id); // Exclude the current maintenance
+            }),
+        ];
+    } else {
+        // If the due date has not changed, we can keep it required and date
+        $validationRules['due_date'] = 'required|date';
+    }
+
+    // Validate the request with the defined rules
+    $req->validate($validationRules);
+    
+    
+
 
         $maintenance->vehicle_id = $req->vehicle_id;
         $maintenance->maintenance_type = $req->maintenance_type;

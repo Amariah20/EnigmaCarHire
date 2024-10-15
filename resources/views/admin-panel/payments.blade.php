@@ -44,11 +44,12 @@
     <tr>
       
       <td>{{$payment->payment_id}}</td>
-      <td> {{$payment->reservation_id}}</td>
+      <td>{{$payment->reservation_id}}</td>
       <td>{{ $payment->reservation ? $payment->reservation->total_price : 'N/A' }}</td>
       <td>{{ $payment->total_paid }}</td> 
       <td>{{$payment->payment_date}}</td>
-      <td> {{ $payment->status}}</td>
+      <td>{{ $payment->status}}</td>
+      <td><a href="{{route('editPayment', ['payment_id'=>$payment->payment_id])}}"><i class="bi bi-pen-fill"></i></a></td>
 
       
 </tr>

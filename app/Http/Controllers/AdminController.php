@@ -187,5 +187,35 @@ class AdminController extends Controller
          
     }
 
+    public function editPayment($payment_id){
+
+        
+
+        //When a change to total price occurs in reservation tab, it is reflected in payments.
+        $payment=Payment::where('payment_id', $payment_id)->first();
+
+        return view('admin-panel.editPayment', compact('payment'));
+
+
+
+    }
+
+    public function storeEditPayment(Request $req, $payment_id){
+
+        
+
+        $payment= Payment::where('payment_id', $payment_id)->first();
+
+        
+
+        $payment->total_paid= $req->total_paid;
+        $payment->status = $req->status;
+        $payment->payment_date = $req->payment_date;
+
+        $payment->update();
+
+        return redirect()->route('payments')->with('success', 'Payment Edited Successfully');
+
+    }
 
 }

@@ -27,3 +27,4 @@ Route::get('/deleteVehicle/{vehicle_id}', [AdminController::class, 'deleteVehicl
 Route::get('/reservations', [AdminController::class, 'showReservations'])->name('reservations');
 Route::get('/editReservation/{reservation_id}', [AdminController::class, 'editReservation'])->name('editReservation');
 Route::post('/storeEditReservation/{reservation_id}', [AdminController::class, 'storeEditReservation'])->name('storeEditReservation');
+Route::get('/deleteReservation/{reservation_id}', [AdminController::class, 'deleteReservation'])->name('deleteReservation');

@@ -111,25 +111,7 @@ class AdminController extends Controller
 
     }
 
-    /**public function storeEditReservation(Request $req, $reservation_id){
-
-        $reservation = Reservation::where('reservation_id', $reservation_id)->first();
-        $reservation->vehicle_id = $req->vehicle_id;
-        $reservation->total_price = $req->total_price;
-        $reservation->pick_up = $req->collection;
-        $reservation->return = $req->return;
-        $reservation->status = $req->status;
-
-        
-
-        $reservation->update();
-
-        return redirect()->route('reservations')->with('success', 'Reservation Edited Successfully');
-
-
-        
-
-    }*/
+  
     
     public function storeEditReservation(Request $req, $reservation_id){
 
@@ -174,7 +156,16 @@ class AdminController extends Controller
         return redirect()->route('reservations')->with('success', 'Reservation Edited Successfully');
     }
 
-    
+    public function deleteReservation($reservation_id){
+
+        $reservation= Vehicle::where('vehicle_id', $reservation_id);
+        $reservation->delete();
+
+        return redirect()->route('reservations')->with('success', 'Reservation Deleted Successfully');
+
+
+
+    }
 
 
 

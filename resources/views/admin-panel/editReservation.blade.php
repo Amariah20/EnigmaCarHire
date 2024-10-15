@@ -69,7 +69,7 @@
   </div>
   <div class="mb-3">
     <label class="form-label">Total Price</label> <!--have formula to automatically calculate total price based on vehicle_id (daily rate) & collection & return date-->
-    <input type="number" class="form-control" name="total_price" value="{{$reservation->total_price}}" required> 
+    <input type="number" class="form-control" name="total_price" value="{{$reservation->total_price}}" readonly> 
   </div>
 
   <div class="mb-3">

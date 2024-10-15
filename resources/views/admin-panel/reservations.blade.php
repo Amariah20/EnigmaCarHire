@@ -3,7 +3,7 @@
 @section('content')
 
   
-<h1 style="text-align:centre"> Vehicles </h1>
+<h1 style="text-align:centre"> Reservations </h1>
 <br>
 
 

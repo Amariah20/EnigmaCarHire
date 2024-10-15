@@ -98,14 +98,33 @@ class AdminController extends Controller
         return view('admin-panel.reservations', compact('reservations'));
     }
 
-    public function editReservation(Request $req, $reservation_id){
+    public function editReservation($reservation_id){
 
         $reservation= Reservation::where('reservation_id', $reservation_id)->first();
+        $vehicles = Vehicle::all();
       
 
-        return view('admin-panel.editReservation', compact('reservation'));
+        return view('admin-panel.editReservation', compact('reservation', 'vehicles'));
 
 
+
+    }
+
+    public function storeEditReservation(Request $req, $reservation_id){
+
+        $reservation = Reservation::where('reservation_id', $reservation_id)->first();
+        $reservation->vehicle_id = $req->vehicle_id;
+        $reservation->total_price = $req->total_price;
+        $reservation->pick_up = $req->collection;
+        $reservation->return = $req->return;
+        $reservation->status = $req->status;
+
+        $reservation->update();
+
+        return redirect()->route('reservations')->with('success', 'Reservation Edited Successfully');
+
+
+        
 
     }
 

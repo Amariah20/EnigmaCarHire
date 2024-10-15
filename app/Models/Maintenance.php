@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log; // Import Log facade for debugging
 
 class Maintenance extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
-        
+    protected $fillable = [
         'maintenance_type',
         'due_date',
         'price',
@@ -21,9 +21,10 @@ class Maintenance extends Model
 
     protected $primaryKey = 'maintenance_id';
 
-
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class, 'vehicle_id');
     }
+
+
 }

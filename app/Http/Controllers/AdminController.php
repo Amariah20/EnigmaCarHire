@@ -329,6 +329,27 @@ class AdminController extends Controller
 
         $maintenance->update();
 
+
+
+        // Update the vehicle status based on the maintenance status
+        $vehicle = Vehicle::where('vehicle_id', $maintenance->vehicle_id)->first();
+
+
+
+        if ($req->status === 'In progress') {
+            // If maintenance is "in progress", set the vehicle status to "in service"
+            $vehicle->status = 'in service';
+            
+        } elseif ($req->status === 'completed' || $req->status === 'Upcoming' || $req->status === 'Cancelled') {
+            // If maintenance is "completed" or "upcoming", set the vehicle status to "available"
+            $vehicle->status = 'available';
+            
+           
+        }
+
+        // Save the updated vehicle status
+        $vehicle->update();
+
         return redirect()->back()->with('success', 'Maintenance Edited Successfully');
 
     }

@@ -71,9 +71,9 @@
   <select name="status" class="form-control" required>
       <option value="">Select Status</option>
       <option value="completed">Completed</option>
-      <option value="Upcoming">Upcoming</option>
-      <option value="In progress">In Progress</option>
-      <option value="Cancelled">Cancelled</option>
+      <option value="upcoming">Upcoming</option>
+      <option value="in-progress">In Progress</option>
+      <option value="cancelled">Cancelled</option>
   </select>
 </div>
 

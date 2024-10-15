@@ -67,7 +67,7 @@
     <select name=status class="form-control" value="{{$vehicle->status}}" required>
         <option value="available">Available</option>
         <option value="rented">Rented</option>
-        <option value="in service">In Service</option>
+        <option value="in-service">In Service</option>
     </select>
   </div>
   <div class="mb-3">

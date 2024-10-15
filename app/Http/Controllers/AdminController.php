@@ -247,7 +247,9 @@ class AdminController extends Controller
 
     public function showMaintenances(){
         $maintenances = Maintenance::all();
-        return view ('admin-panel.maintenances', compact('maintenances'));
+
+        $totalPrice = $maintenances->sum('price');
+        return view ('admin-panel.maintenances', compact('maintenances', 'totalPrice'));
     }
 
     public function addMaintenance()

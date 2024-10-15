@@ -49,7 +49,11 @@
   @foreach($reservations as $reservation)
     <tr>
       
-      <td>{{$reservation->reservation_id}}</td>
+      <td>
+        <a href="{{ route('viewReservation', ['reservation_id' => $reservation->reservation_id]) }}">
+        {{$reservation->reservation_id}}
+        </a>
+      </td>
       <td> {{$reservation->customer_id}}</td>
       <td>{{$reservation->customer ? $reservation->customer->name : 'N/A'}}</td>
       <td>{{ $reservation->additionalDriver ? $reservation->additionalDriver->name : 'N/A' }}</td> 

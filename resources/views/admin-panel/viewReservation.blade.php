@@ -36,7 +36,7 @@
             <p><strong>Email:</strong> {{$reservation->customer ? $reservation->customer->email : 'N/A'}}</p>
             <p><strong>Phone Number:</strong> {{$reservation->customer ? $reservation->customer->phone_number : 'N/A'}}</p>
             <p><strong>License Number:</strong> {{$reservation->customer ? $reservation->customer->license_number : 'N/A'}}</p>
-            <p><strong>Issuing Country:</strong> {{$reservation->customer ? $reservation->customer->issuing_Country : 'N/A'}}</p>
+            <p><strong>Issuing Country:</strong> {{$reservation->customer ? $reservation->customer->issuing_country : 'N/A'}}</p>
         </div>
     </div>
 

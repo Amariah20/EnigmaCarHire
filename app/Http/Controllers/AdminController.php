@@ -182,7 +182,14 @@ class AdminController extends Controller
     public function showPayments(){
 
         $payments = Payment::with('reservation')->get();
-        return view('admin-panel.payments', compact('payments'));
+
+        $totalPrice = $payments->sum(function($payment) {
+            return $payment->reservation ? $payment->reservation->total_price : 0;
+        });
+    
+        $totalPaid = $payments->sum('total_paid');
+
+        return view('admin-panel.payments', compact('payments', 'totalPrice', 'totalPaid'));
 
          
     }

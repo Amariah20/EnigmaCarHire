@@ -24,8 +24,19 @@
 
 
 
+
 <table class="table table-hover">
   <thead class="thead-dark">
+
+
+  <tr>
+            <th scope="col" colspan="2">Totals</th>
+            <th scope="col">{{ $totalPrice }}</th>
+            <th scope="col">{{ $totalPaid }}</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
     <tr>
       <th scope="col">Payment ID</th>
       <th scope="col">Reservation ID</th>
@@ -37,6 +48,8 @@
       
       
     </tr>
+
+    
   </thead>
 
   <tbody>

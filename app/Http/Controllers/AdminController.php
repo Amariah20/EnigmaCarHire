@@ -33,13 +33,6 @@ class AdminController extends Controller
 
 
 
-
-
-      
-
-        
-
-
         $currentDate = Carbon::now();
     
         // Get the date 7 days from now
@@ -195,6 +188,10 @@ class AdminController extends Controller
             $reservation->total_price = $req->total_price;
         }
 
+
+        
+       
+
         
         // Save the updated reservation
         $reservation->update();
@@ -204,7 +201,7 @@ class AdminController extends Controller
     if ($reservation->additionalDriver) {
         $additionalDriver = $reservation->additionalDriver;
         $additionalDriver->name = $req->additional_driver; // Use the input from the form
-        $additionalDriver->save(); // Save the updated additional driver
+        $additionalDriver->update(); // Save the updated additional driver
     }
 
 
@@ -216,7 +213,7 @@ class AdminController extends Controller
         if ($payment) {
             // Automatically set payment status to 'cancelled' if reservation is cancelled
             $payment->status = 'cancelled';
-            $payment->save();
+            
         }
     } else {
         // If reservation status is changed from 'cancelled' to 'confirmed' or 'completed', update the payment status
@@ -232,10 +229,13 @@ class AdminController extends Controller
                 $payment->status = 'not-paid'; // Not paid
             }
 
-            $payment->save(); // Save the updated payment status
+           
         }
     }
 
+
+        $payment->total_price = $req->total_price;
+        $payment->update();
 
 
         // Redirect back to reservations with success message

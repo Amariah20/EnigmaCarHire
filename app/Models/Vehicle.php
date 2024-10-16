@@ -37,6 +37,6 @@ class Vehicle extends Model
 
     public function insurances()
     {
-        return $this->hasMany(Insurance::class);
+        return $this->hasMany(Insurance::class, 'vehicle_id');
     }
 }

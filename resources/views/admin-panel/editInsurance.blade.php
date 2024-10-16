@@ -42,10 +42,7 @@
         <input type="date" class="form-control" name="due_date" value="{{ $insurance->due_date }}" required>
     </div>
 
-    <div class="mb-3">
-        <label class="form-label">Expiration Date</label>
-        <input type="date" class="form-control" name="expiration" value="{{ $insurance->expiration }}" required>
-    </div>
+
 
     <div class="mb-3">
         <label class="form-label">Price</label>

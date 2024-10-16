@@ -30,7 +30,7 @@
   <thead class="thead-dark">
 
   <tr>
-            <th scope="col" colspan="5">Total</th>
+            <th scope="col" colspan="4">Total</th>
             <th scope="col">{{ $totalPrice }}</th>
             <th scope="col"></th>
             <th scope="col"></th>
@@ -42,7 +42,6 @@
      <th scope="col">Vehicle ID</th>
       <th scope="col">Vehicle Name</th>
       <th scope="col">Due Date</th>
-      <th scope="col">Expiration Date</th>
       <th scope="col">Price</th>
       <th scope="col">Status</th>
       <th scope="col">Edit</th>
@@ -55,11 +54,10 @@
   @foreach($insurances as $insurance)
     <tr>
       
-        <td>{{$insurance->insurance_id}}</td>
+      <td>{{$insurance->insurance_id}}</td>
       <td>{{$insurance->vehicle_id}}</td>
       <td> {{ $insurance->vehicle ? $insurance->vehicle->vehicle_name : 'N/A' }}</td>
       <td>{{$insurance->due_date}}</td>
-      <td>{{$insurance->expiration}}</td>
       <td> SCR {{$insurance->price}}</td>
       <td> {{$insurance->status}}</td>
       <td><a href="{{route('editInsurance', ['insurance_id'=>$insurance->insurance_id])}}"><i class="bi bi-pen-fill"></i></a></td>

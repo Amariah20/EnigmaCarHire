@@ -50,10 +50,6 @@
     <input type="date" class="form-control" name="due_date" required>
   </div>
 
-  <div class="mb-3">
-    <label class="form-label">Expiration Date</label>
-    <input type="date" class="form-control" name="expiration_date" required>
-  </div>
 
   
 

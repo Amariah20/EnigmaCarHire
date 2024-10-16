@@ -44,11 +44,15 @@ class AdminController extends Controller
                                      ->whereNotIn('status', ['completed', 'in progress', 'Cancelled']) 
                                      ->get();
 
+            $InsurancedueNextWeek = Insurance::whereBetween('due_date', [$currentDate, $nextWeekDate])
+                                    ->whereNotIn('status', ['completed', 'Cancelled']) 
+                                    ->get();                       
+
          $vehicles = Vehicle::all();
       
 
 
-        return view('admin-panel.dashboard', compact('MaintenenacedueNextWeek', 'vehicles', 'OutstandingPayments'));
+        return view('admin-panel.dashboard', compact('MaintenenacedueNextWeek', 'vehicles', 'OutstandingPayments', 'InsurancedueNextWeek'));
     }
 
 
@@ -489,12 +493,13 @@ class AdminController extends Controller
 
     public function storeInsurance(Request $req){
 
+
        
 
        $insurance= new \App\Models\Insurance();
        $insurance->vehicle_id = $req->vehicle_id;
        $insurance->due_date = $req->due_date;
-       $insurance->expiration = $req->expiration_date;
+ 
        $insurance->price = $req->price;
        $insurance->status = $req->status;
 
@@ -513,11 +518,12 @@ class AdminController extends Controller
 
     public function storeEditInsurance(Request $req, $insurance_id){
 
+    
         $insurance = Insurance::where('insurance_id', $insurance_id)->first();
 
         $insurance->vehicle_id = $req->vehicle_id;
         $insurance->due_date = $req->due_date;
-        $insurance->expiration =$req->expiration;
+
         $insurance->price = $req->price;
         $insurance->status = $req->status;
 
@@ -530,6 +536,8 @@ class AdminController extends Controller
     }
 
     public function deleteInsurance($insurance_id){
+
+      
         
         $insurance = Insurance::where('insurance_id', $insurance_id)->first();
 

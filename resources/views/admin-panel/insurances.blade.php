@@ -55,7 +55,11 @@
     <tr>
       
       <td>{{$insurance->insurance_id}}</td>
-      <td>{{$insurance->vehicle_id}}</td>
+      <td>
+
+      <a href="{{ route('viewVehicle', ['vehicle_id' => $insurance->vehicle_id]) }}">
+        {{$insurance->vehicle_id}} </a>
+    </td>
       <td> {{ $insurance->vehicle ? $insurance->vehicle->vehicle_name : 'N/A' }}</td>
       <td>{{$insurance->due_date}}</td>
       <td> SCR {{$insurance->price}}</td>

@@ -56,7 +56,10 @@
     <tr>
       
         <td>{{$maintenance->maintenance_id}}</td>
-      <td>{{$maintenance->vehicle_id}}</td>
+      <td>
+      <a href="{{ route('viewVehicle', ['vehicle_id' => $maintenance->vehicle_id]) }}">
+        {{$maintenance->vehicle_id}} </a>
+      </td>
       <td> {{ $maintenance->vehicle ? $maintenance->vehicle->vehicle_name : 'N/A' }}</td>
       <td>{{$maintenance->maintenance_type}}</td>
       <td>{{$maintenance->description}}</td>

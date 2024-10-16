@@ -544,8 +544,23 @@ class AdminController extends Controller
         $insurance->delete();
 
         return redirect()->back()->with('success', 'Insurance Deleted Successfully');
+        
+
+    }
 
 
+    public function viewVehicle($vehicle_id){
+
+        $vehicle = Vehicle::with('reservations', 'insurances', 'maintenances')->where('vehicle_id', $vehicle_id)->first();
+        $reservations = $vehicle->reservations; 
+        $insurances =$vehicle->insurances;
+        $maintenances =$vehicle->maintenances;
+        $totalInsurance = $insurances->sum('price');
+        $totalMaintenance = $maintenances->sum('price');
+      
+
+        // Pass the vehicle data to the view
+        return view('admin-panel.viewVehicle', compact('vehicle', 'reservations', 'insurances', 'maintenances', 'totalInsurance', 'totalMaintenance'));
     }
 
 

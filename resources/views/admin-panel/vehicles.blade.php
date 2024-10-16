@@ -47,7 +47,10 @@
   @foreach($vehicles as $vehicle)
     <tr>
       
-    <td>{{$vehicle->vehicle_id}}</td>
+    <td>
+    <a href="{{ route('viewVehicle', ['vehicle_id' => $vehicle->vehicle_id]) }}">
+      {{$vehicle->vehicle_id}} </a>
+    </td>
       <td>{{$vehicle->vehicle_name}}</td>
       <td> {{$vehicle->make_model}}</td>
       <td>{{$vehicle->license_plate}}</td>

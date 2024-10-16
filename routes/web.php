@@ -49,3 +49,6 @@ Route::post('/storeInsurance', [AdminController::class, 'storeInsurance'])->name
 Route::get('/editInsurance/{insurance_id}', [AdminController::class, 'editInsurance'])->name('editInsurance');
 Route::post('/storeEditInsurance/{insurance_id}', [AdminController::class, 'storeEditInsurance'])->name('storeEditInsurance');
 Route::get('/deleteInsurance/{insurance_id}', [AdminController::class, 'deleteInsurance'])->name('deleteInsurance');
+
+
+Route::get('/viewVehicle/{vehicle_id}', [AdminController::class, 'viewVehicle'])->name('viewVehicle');

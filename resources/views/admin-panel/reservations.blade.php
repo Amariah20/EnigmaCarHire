@@ -57,7 +57,10 @@
       <td> {{$reservation->customer_id}}</td>
       <td>{{$reservation->customer ? $reservation->customer->name : 'N/A'}}</td>
       <td>{{ $reservation->additionalDriver ? $reservation->additionalDriver->name : 'N/A' }}</td> 
-      <td>{{$reservation->vehicle_id}}</td>
+      <td>
+      <a href="{{ route('viewVehicle', ['vehicle_id' => $reservation->vehicle_id]) }}">
+        {{$reservation->vehicle_id}} </a>
+      </td>
       <td> {{ $reservation->vehicle ? $reservation->vehicle->vehicle_name : 'N/A' }}</td>
       <td> {{$reservation->reservation_date}}</td>
       <td> {{$reservation->pick_up}}</td>

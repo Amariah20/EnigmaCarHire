@@ -19,11 +19,23 @@ class AdminController extends Controller
 
         //to show outstanding payment on dashboard
         //Must ensure not to include records where reservation was cancelled
-        //THIS IS WRONG. THE MATH IS NOT MATHING. REDO
+       
+       // Fetch payments where status is partially-paid or not-paid
+         $payments = Payment::whereIn('status', ['partially-paid', 'not-paid'])->get();
 
-        $OutstandingPayments = Payment::whereColumn('total_price', '>', 'total_paid') // Only where outstanding balance exists
-        ->sum(DB::raw('total_price - total_paid')); // Calculate sum of the differences
+         $total_price = $payments->sum('total_price');
+         $total_paid = $payments->sum('total_paid');
+        
+         
 
+          // Calculate total outstanding payments
+         $OutstandingPayments = $total_price - $total_paid;
+
+
+
+
+
+      
 
         
 

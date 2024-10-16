@@ -12,8 +12,9 @@
         <div class="card-body">
             <h3 class="card-title">Financial Overview</h3>
             <h4 class="card-text">Outstanding payments</h4>
-            <h5 class="card-text">{{$OutstandingPayments}} WRONG ANS</h5> <!--pull data from payments table-->
-            <button type="button" class="btn btn-secondary">View Details</button>
+            <h5 class="card-text">SCR {{$OutstandingPayments}} </h5>
+           
+            <a href="{{ route('payments') }}" class="btn btn-secondary">View Details</a>
         </div>
     </div>
 

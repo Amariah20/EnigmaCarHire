@@ -85,12 +85,12 @@
 
         <link rel="stylesheet" type="text/css" href="/admin.css">
             <div class="sidebar">
-            <a class="active" href="#home"><i class="bi bi-house-fill"></i> Dashboard</a>
-            <a href="#news"><i class="bi bi-car-front-fill"></i> Vehicles</a>
-            <a href="#contact"><i class="bi bi-calendar-check-fill"></i> Reservations</a>
-            <a href="#about"><i class="bi bi-credit-card-2-back-fill"></i> Payments</a>
-            <a href="#about"><i class="bi bi-tools"></i> Maintenance</a>
-            <a href="#about"><i class="bi bi-shield-shaded"></i>Insurance</a>
+            <a class="active" href="{{route('dashboard')}}"><i class="bi bi-house-fill"></i> Dashboard</a>
+            <a href="{{route('vehicles')}}"><i class="bi bi-car-front-fill"></i> Vehicles</a>
+            <a href="{{route('reservations')}}"><i class="bi bi-calendar-check-fill"></i> Reservations</a>
+            <a href="{{route('payments')}}"><i class="bi bi-credit-card-2-back-fill"></i> Payments</a>
+            <a href="{{route('maintenances')}}"><i class="bi bi-tools"></i> Maintenance</a>
+            <a href="{{route('insurances')}}"><i class="bi bi-shield-shaded"></i>Insurance</a>
 
             <div class="dropdown">
             <a href="#about"> <i class="bi bi-people-fill"></i> Users</a>

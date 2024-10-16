@@ -7,6 +7,7 @@ use App\Models\Payment;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
+use App\Models\Insurance;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -467,6 +468,38 @@ class AdminController extends Controller
         $maintenance->delete();
 
         return redirect()->back()->with('success', 'Maintenance Deleted Successfully');
+
+
+
+    }
+
+
+    public function showInsurances(){
+        $insurances= Insurance::all();
+        return view('admin-panel.insurances', compact('insurances'));
+    }
+
+    public function addInsurance(){
+
+        $vehicles = Vehicle::all();
+        return view ('admin-panel.addInsurance', compact('vehicles'));
+
+    }
+
+    public function storeInsurance(Request $req){
+
+       
+
+       $insurance= new \App\Models\Insurance();
+       $insurance->vehicle_id = $req->vehicle_id;
+       $insurance->due_date = $req->due_date;
+       $insurance->expiration = $req->expiration_date;
+       $insurance->price = $req->price;
+       $insurance->status = $req->status;
+
+       $insurance->save();
+
+       return redirect()->back()->with('success', 'Insurance Added Successfully');
 
 
 

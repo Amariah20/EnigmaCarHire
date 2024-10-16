@@ -16,7 +16,7 @@ Route::post('/storeCustomer',[CustomerController::class, 'storeCustomer'])->name
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //add admin middleware later
-Route::get('/dashboard', [AdminController::class, 'show']);
+Route::get('/dashboard', [AdminController::class, 'show'])->name('dashboard');
 Route::get('/vehicles', [AdminController::class, 'showVehicles'])->name('vehicles');
 Route::get('/AddVehicle', [AdminController::class, 'addvehicle'])->name('AddVehicle');
 Route::post('/storeVehicle', [AdminController::class, 'storeVehicle'])->name('storeVehicle');
@@ -42,3 +42,7 @@ Route::post('/storeMaintenance', [AdminController::class, 'storeMaintenance'])->
 Route::get('/editMaintenance/{maintenance_id}', [AdminController::class, 'editMaintenance'])->name('editMaintenance');
 Route::post('/storeEditMaintenance/{maintenance_id}', [AdminController::class, 'storeEditMaintenance'])->name('storeEditMaintenance');
 Route::get('/deleteMaintenance/{maintenance_id}', [AdminController::class, 'deleteMaintenance'])->name('deleteMaintenance');
+
+Route::get('/insurances', [AdminController::class, 'showInsurances'])->name('insurances');
+Route::get('/addInsurance', [AdminController::class, 'addInsurance'])->name('addInsurance');
+Route::post('/storeInsurance', [AdminController::class, 'storeInsurance'])->name('storeInsurance');

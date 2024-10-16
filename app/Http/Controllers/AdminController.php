@@ -18,6 +18,7 @@ class AdminController extends Controller
 
 
         //to show outstanding payment on dashboard
+        //Must ensure not to include records where reservation was cancelled
         //THIS IS WRONG. THE MATH IS NOT MATHING. REDO
 
         $OutstandingPayments = Payment::whereColumn('total_price', '>', 'total_paid') // Only where outstanding balance exists
@@ -195,6 +196,36 @@ class AdminController extends Controller
     }
 
 
+      // Fetch the associated payment
+      $payment = Payment::where('reservation_id', $reservation_id)->first();
+
+        // Logic for automatically updating payment status based on reservation and payment amounts
+    if ($reservation->status == 'cancelled') {
+        if ($payment) {
+            // Automatically set payment status to 'cancelled' if reservation is cancelled
+            $payment->status = 'cancelled';
+            $payment->save();
+        }
+    } else {
+        // If reservation status is changed from 'cancelled' to 'confirmed' or 'completed', update the payment status
+        if ($payment) {
+            $total_price = $reservation->total_price;
+            $total_paid = $payment->total_paid;
+
+            if ($total_paid == $total_price) {
+                $payment->status = 'paid'; // Fully paid
+            } elseif ($total_paid > 0 && $total_paid < $total_price) {
+                $payment->status = 'partially-paid'; // Partially paid
+            } elseif ($total_paid == 0) {
+                $payment->status = 'not-paid'; // Not paid
+            }
+
+            $payment->save(); // Save the updated payment status
+        }
+    }
+
+
+
         // Redirect back to reservations with success message
         return redirect()->back()->with('success', 'Reservation Edited Successfully');
     }
@@ -231,6 +262,12 @@ class AdminController extends Controller
         //When a change to total price occurs in reservation tab, it is reflected in payments.
         $payment=Payment::where('payment_id', $payment_id)->first();
 
+             // Check if the payment status is "cancelled"
+             if ($payment->status == 'cancelled') {
+                // Redirect back with an error message
+                return redirect()->back()->withErrors(['error' => 'You cannot edit a payment record that is associated with a cancelled reservation.']);
+                }
+
         return view('admin-panel.editPayment', compact('payment'));
 
 
@@ -242,12 +279,41 @@ class AdminController extends Controller
         
 
         $payment= Payment::where('payment_id', $payment_id)->first();
+       
+    
 
-        
 
         $payment->total_paid= $req->total_paid;
-        $payment->status = $req->status;
         $payment->payment_date = $req->payment_date;
+
+        $reservation= Reservation::where('reservation_id', $req->reservation_id)->first();
+
+        if ($reservation->status == 'cancelled') {
+            
+                // Automatically set payment status to 'cancelled' if reservation is cancelled
+                $payment->status = 'cancelled';
+                
+            
+        } else {
+            
+                $total_price = $req->total_price;
+                $total_paid = $req->total_paid;
+    
+                if ($total_paid == $total_price) {
+                    $payment->status = 'paid'; // Fully paid
+                } elseif ($total_paid > 0 && $total_paid < $total_price) {
+                    $payment->status = 'partially-paid'; // Partially paid
+                } elseif ($total_paid == 0) {
+                    $payment->status = 'not-paid'; // Not paid
+                }
+    
+               
+            }
+        
+    
+
+
+
 
         $payment->update();
 

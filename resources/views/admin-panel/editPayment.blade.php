@@ -55,10 +55,11 @@
 
   <div class="mb-3">
         <label class="form-label">Status</label>
-        <select name="status" class="form-control" required>
+        <select name="status" class="form-control" disabled>
             <option value="paid" {{ $payment->status == 'paid' ? 'selected' : '' }}>Paid</option>
             <option value="partially-paid" {{ $payment->status == 'partially-paid' ? 'selected' : '' }}>Partially Paid</option>
             <option value="not-paid" {{ $payment->status == 'not-paid' ? 'selected' : '' }}>Not Paid</option>
+            <option value="cancelled" {{ $payment->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
         </select>
     </div>
   

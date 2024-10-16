@@ -12,7 +12,7 @@
         <div class="card-body">
             <h3 class="card-title">Financial Overview</h3>
             <h4 class="card-text">Outstanding payments</h4>
-            <h5 class="card-text">{{$OutstandingPayments}}</h5> <!--pull data from payments table-->
+            <h5 class="card-text">{{$OutstandingPayments}} WRONG ANS</h5> <!--pull data from payments table-->
             <button type="button" class="btn btn-secondary">View Details</button>
         </div>
     </div>

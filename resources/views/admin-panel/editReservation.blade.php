@@ -24,7 +24,7 @@
 
 
 
-<form method="POST" action="{{route('storeEditReservation', ['reservation_id'=>$reservation->reservation_id])}}" >
+<form method="POST" action="{{route('storeEditReservation', ['reservation_id'=>$reservation->reservation_id])}}" onsubmit="return confirmCompletion()">
     @csrf 
 
   <div class="mb-3">
@@ -74,7 +74,7 @@
 
   <div class="mb-3">
         <label class="form-label">Status</label>
-        <select name="status" class="form-control" required>
+        <select name="status"  id="reservationStatus" class="form-control" required>
             <option value="confirmed" {{ $reservation->status == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
             <option value="cancelled" {{ $reservation->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
             <option value="completed" {{ $reservation->status == 'completed' ? 'selected' : '' }}>Completed</option>
@@ -85,6 +85,17 @@
   <button type="submit" class="btn btn-primary">Update Reservation</button>
 </form>
 
+<script>
+    function confirmCompletion() {
+        const reservationStatus = document.getElementById('reservationStatus').value;
+        const paymentStatus = "{{ $reservation->payment->status }}"; 
 
+        // If reservation status is "completed" and payment is not "paid"
+        if (reservationStatus === 'completed' && paymentStatus !== 'paid') {
+            return confirm('Please note that the payment for this reservation has not been completed in full.  Do you wish to proceed with changing the reservation status to completed?');
+        }
+        return true; // Proceed without confirmation if conditions are not met
+    }
+</script>
 
 @endsection

@@ -171,11 +171,14 @@ class AdminController extends Controller
         // Fetch the vehicle to get the daily_rate
         $vehicle = Vehicle::where('vehicle_id', $req->vehicle_id)->first();
 
+
+        $pick_up_date = Carbon::parse($req->collection);
+        $return_date = Carbon::parse($req->return);
+
         // Check if both pick_up and return dates are provided and valid
         if ($vehicle && $req->collection && $req->return) {
             // Parse the collection and return dates using Carbon
-            $pick_up_date = Carbon::parse($req->collection);
-            $return_date = Carbon::parse($req->return);
+           
 
             // Ensure that the return date is after the pickup date
             if ($return_date->greaterThanOrEqualTo($pick_up_date)) {
@@ -194,6 +197,8 @@ class AdminController extends Controller
         }
 
 
+        
+            
          
             // ** Check for conflicting reservations or maintenance schedules ** //
             $existingReservation = Reservation::where('vehicle_id', $req->vehicle_id)
@@ -210,16 +215,21 @@ class AdminController extends Controller
                 });
             })->exists();
 
+           
+
+            $pick_up_date_check = Carbon::parse($req->collection)->subDay();
+
+
             // Check for maintenance schedules for the selected vehicle
             $maintenanceSchedule = Maintenance::where('vehicle_id', $req->vehicle_id)
             ->where('status', '!=', 'completed') // Exclude completed maintenance
             ->where('status', '!=', 'cancelled') // Exclude cancelled maintenance
-            ->where(function ($query) use ($pick_up_date, $return_date) {
+            ->where(function ($query) use ($pick_up_date_check, $return_date) {
                 // Maintenance due dates should be on or between the rental dates
-                $query->where(function ($q) use ($pick_up_date, $return_date) {
+                $query->where(function ($q) use ($pick_up_date_check, $return_date) {
                     // Maintenance cannot be due within the rental period
                     // Vehicle cannot be returned on or after the maintenance due date
-                    $q->where('due_date', '>=', $pick_up_date)
+                    $q->where('due_date', '>=', $pick_up_date_check)
                     ->where('due_date', '<=', $return_date);
                 });
             })->exists();
@@ -413,6 +423,9 @@ class AdminController extends Controller
              'due_date' => 'required|date|unique:maintenances,due_date', // Ensure unique due_date across all maintenance records
         ]);
 
+
+           
+
         $maintenance= new \App\Models\Maintenance();
         $maintenance->vehicle_id = $req->vehicle_id;
         $maintenance->maintenance_type = $req->maintenance_type;
@@ -463,10 +476,11 @@ class AdminController extends Controller
 
     // Validate the request with the defined rules
     $req->validate($validationRules);
-    
-    
 
 
+
+
+      
         $maintenance->vehicle_id = $req->vehicle_id;
         $maintenance->maintenance_type = $req->maintenance_type;
         $maintenance->description = $req->description;

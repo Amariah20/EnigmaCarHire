@@ -195,37 +195,43 @@ class AdminController extends Controller
 
 
          
-     // ** Check for conflicting reservations or maintenance schedules ** //
-     $existingReservation = Reservation::where('vehicle_id', $req->vehicle_id)
-     ->where('reservation_id', '!=', $reservation_id) // Exclude the current reservation
-     ->where(function ($query) use ($pick_up_date, $return_date) {
-         // Check if the vehicle is reserved on the same day as pick-up or overlapping dates
-         $query->where(function ($q) use ($pick_up_date) {
-             // Vehicle cannot be picked up on the same day it is returned
-             $q->where('return', '>=', $pick_up_date);
-         })
-         ->where(function ($q) use ($return_date) {
-             // Vehicle cannot be returned before the new pick-up date
-             $q->where('pick_up', '<=', $return_date);
-         });
-     })->exists();
+            // ** Check for conflicting reservations or maintenance schedules ** //
+            $existingReservation = Reservation::where('vehicle_id', $req->vehicle_id)
+            ->where('reservation_id', '!=', $reservation_id) // Exclude the current reservation
+            ->where(function ($query) use ($pick_up_date, $return_date) {
+                // Check if the vehicle is reserved on the same day as pick-up or overlapping dates
+                $query->where(function ($q) use ($pick_up_date) {
+                    // Vehicle cannot be picked up on the same day it is returned
+                    $q->where('return', '>=', $pick_up_date);
+                })
+                ->where(function ($q) use ($return_date) {
+                    // Vehicle cannot be returned before the new pick-up date
+                    $q->where('pick_up', '<=', $return_date);
+                });
+            })->exists();
 
- // Check for maintenance schedules for the selected vehicle
- $maintenanceSchedule = Maintenance::where('vehicle_id', $req->vehicle_id)
-     ->where('status', '!=', 'completed') // Exclude completed maintenance
-     ->where('status', '!=', 'cancelled') // Exclude cancelled maintenance
-     ->where(function ($query) use ($pick_up_date, $return_date) {
-         // Maintenance due dates should be on or between the rental dates
-         $query->whereBetween('due_date', [$pick_up_date, $return_date]);
-     })->exists();
+            // Check for maintenance schedules for the selected vehicle
+            $maintenanceSchedule = Maintenance::where('vehicle_id', $req->vehicle_id)
+            ->where('status', '!=', 'completed') // Exclude completed maintenance
+            ->where('status', '!=', 'cancelled') // Exclude cancelled maintenance
+            ->where(function ($query) use ($pick_up_date, $return_date) {
+                // Maintenance due dates should be on or between the rental dates
+                $query->where(function ($q) use ($pick_up_date, $return_date) {
+                    // Maintenance cannot be due within the rental period
+                    // Vehicle cannot be returned on or after the maintenance due date
+                    $q->where('due_date', '>=', $pick_up_date)
+                    ->where('due_date', '<=', $return_date);
+                });
+            })->exists();
 
- // If the vehicle is already reserved or undergoing maintenance, return an error
- if ($existingReservation || $maintenanceSchedule) {
-     return redirect()->back()->withErrors(['error' => 'The vehicle is not available for the selected dates.']);
- }
+            // If the vehicle is already reserved or undergoing maintenance, return an error
+            if ($existingReservation || $maintenanceSchedule) {
+            return redirect()->back()->withErrors(['error' => 'The vehicle is not available for the selected dates.']);
+            }
 
-        
-       
+
+                    
+                
 
         
         // Save the updated reservation

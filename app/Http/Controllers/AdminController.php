@@ -476,7 +476,8 @@ class AdminController extends Controller
 
     public function showInsurances(){
         $insurances= Insurance::all();
-        return view('admin-panel.insurances', compact('insurances'));
+        $totalPrice = $insurances->sum('price');
+        return view('admin-panel.insurances', compact('insurances', 'totalPrice'));
     }
 
     public function addInsurance(){
@@ -501,6 +502,40 @@ class AdminController extends Controller
 
        return redirect()->back()->with('success', 'Insurance Added Successfully');
 
+    }
+
+    public function editInsurance($insurance_id){
+        $insurance=Insurance::where('insurance_id', $insurance_id)->first();
+        $vehicles = Vehicle::all();
+      
+        return view ('admin-panel.editInsurance', compact('insurance', 'vehicles'));
+    }
+
+    public function storeEditInsurance(Request $req, $insurance_id){
+
+        $insurance = Insurance::where('insurance_id', $insurance_id)->first();
+
+        $insurance->vehicle_id = $req->vehicle_id;
+        $insurance->due_date = $req->due_date;
+        $insurance->expiration =$req->expiration;
+        $insurance->price = $req->price;
+        $insurance->status = $req->status;
+
+        $insurance->update();
+
+        return redirect()->back()->with('success', 'Insurance Updated Successfully');
+
+
+
+    }
+
+    public function deleteInsurance($insurance_id){
+        
+        $insurance = Insurance::where('insurance_id', $insurance_id)->first();
+
+        $insurance->delete();
+
+        return redirect()->back()->with('success', 'Insurance Deleted Successfully');
 
 
     }

@@ -20,8 +20,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand" href="{{ url('/homepage') }}" >
+                    <img src="{{ asset('adminPics/EnigmaLogo.png') }}" alt="Enigma Logo" style="height: 50px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -73,9 +73,27 @@
         </nav>
         <!--icons-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        
+        <!--css-->
+
+        <link rel="stylesheet" type="text/css" href="/mainwebsite.css">
+        <div id="app">
         <main class="py-4">
             @yield('content')
         </main>
     </div>
 </body>
+
+
+<footer class="py-3 my-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Contact</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Rental Terms</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Privacy Policy</a></li>
+    </ul>
+    <p class="text-center text-muted">© 2024 Enigmatic Car Rides</p>
+</footer>
+</div>
+
 </html>

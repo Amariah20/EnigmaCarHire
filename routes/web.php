@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\MainWebsiteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -55,3 +56,7 @@ Route::get('/viewVehicle/{vehicle_id}', [AdminController::class, 'viewVehicle'])
 
 Route::get('/customers', [AdminController::class, 'showCustomers'])->name('customers');
 Route::get('/additionalDrivers', [AdminController::class, 'showadditionalDrivers'])->name('additionalDrivers');
+
+
+//CUSTOMER-FACING WEBSITE
+Route::get('/homepage', [MainWebsiteController::class, 'homepage'])->name('homepage');

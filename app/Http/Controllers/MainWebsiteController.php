@@ -11,6 +11,13 @@ class MainWebsiteController extends Controller
 
         $vehicles = Vehicle::all();
 
-        return view ('homepage', compact('vehicles'));
+        return view ('website.homepage', compact('vehicles'));
+    }
+
+
+    public function ourFleet(){
+
+        $vehicles = Vehicle::all();
+        return view ('website.ourFleet', compact('vehicles'));
     }
 }

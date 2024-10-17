@@ -60,3 +60,4 @@ Route::get('/additionalDrivers', [AdminController::class, 'showadditionalDrivers
 
 //CUSTOMER-FACING WEBSITE
 Route::get('/homepage', [MainWebsiteController::class, 'homepage'])->name('homepage');
+Route::get('/ourFleet', [MainWebsiteController::class, 'ourFleet'])->name('ourFleet');

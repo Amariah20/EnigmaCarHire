@@ -14,17 +14,10 @@
                         <input type="datetime-local" name="pick_up" class="form-control" required>
                     </div>
 
-                  
-
-                   
                     <div class="mb-3">
                         <label class="form-label">Return Date & Time</label>
                         <input type="datetime-local" name="return" class="form-control" required>
                     </div>
-
-                   
-
-                  
                     <button type="submit" class="btn btn-secondary w-100">Search</button>
                 </form>
             </div>
@@ -33,9 +26,10 @@
 
          <!-- Additional text below the card -->
         <div class="text-center mt-4">
-            <h2 style="font-weight: bold; font-size: 1.5rem; color: black;">Drive Your Dreams with Us</h2>
-            <p style="font-size: 0.9rem; color: black;">Experience unparalleled convenience and service. Book with confidence today!</p>
+            <h2 style="font-weight: bold; font-size: 40px; color: black;">Drive Your Dreams with Us</h2>
+            <p style="font-size: 30px; color: black;">Experience unparalleled convenience and service. Book with confidence today!</p>
         </div>
+        <br>
 
         <div class="container mt-5">
     <h3 class="text-center">Our Fleet</h3>
@@ -46,13 +40,13 @@
                     <img src="{{ asset('public/vehicles/'.$vehicle->image) }}" class="rounded-circle me-3" style="width: 50px; height: 50px;" alt="{{ $vehicle->vehicle_name }}">
                     <h5 class="mb-0">{{ $vehicle->vehicle_name }}</h5>
                 </div>
-                @if ($index < 2) <!-- Only show <hr> for the first two vehicles -->
+                @if ($index < 3)
                     <hr>
                 @endif
             @endforeach
         </div>
         <div class="text-center">
-            <a href="" class="btn btn-secondary">View More</a> <!-- Link to the vehicles index page -->
+            <a href="{{route('ourFleet')}}" class="btn btn-secondary">View More</a> <!-- Link to the vehicles index page -->
         </div> <br>
 </div>
 

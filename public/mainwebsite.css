@@ -40,3 +40,18 @@ footer {
     max-width: 600px;
     margin: 50px auto;
 }
+
+/*Rental Form for ourFleet page*/
+
+.rental-form-container .input-group {
+    border-radius: 15px; /* Rounded corners */
+    overflow: hidden; /* Ensure child elements respect rounded corners */
+}
+
+.rental-form-container .input-group .form-control {
+    border: 1px solid #ced4da; /* Use a border to match Bootstrap's styling */
+}
+
+.rental-form-container .btn {
+    border-radius: 15px; /* Rounded corners for the button */
+}

@@ -33,3 +33,10 @@ footer {
 .nav-link:hover {
     color: #000; /* optional hover color */
 }
+
+
+  /* Custom styling for the card and page */
+  .homepage-card {
+    max-width: 600px;
+    margin: 50px auto;
+}

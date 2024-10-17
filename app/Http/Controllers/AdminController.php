@@ -419,9 +419,12 @@ class AdminController extends Controller
     public function storeMaintenance(Request $req){
 
 
-        $req->validate([
-             'due_date' => 'required|date|unique:maintenances,due_date', // Ensure unique due_date across all maintenance records
-        ]);
+        if($req->status !== 'completed' && $req->status !== 'cancelled'){
+
+            $req->validate([
+                'due_date' => 'required|date|unique:maintenances,due_date', // Ensure unique due_date across all maintenance records
+            ]);
+        }
 
 
 
@@ -498,8 +501,11 @@ class AdminController extends Controller
         $maintenance= Maintenance::where('maintenance_id', $maintenance_id)->first();
 
 
-         // Initialize the validation rules array
+       
+        // Initialize the validation rules array
         $validationRules = [];
+
+        if($req->status !== 'completed' && $req->status !== 'Cancelled'){
 
         // Check if the due date has been changed
         if ($req->has('due_date') && $req->due_date !== $maintenance->due_date) {
@@ -518,6 +524,8 @@ class AdminController extends Controller
 
     // Validate the request with the defined rules
     $req->validate($validationRules);
+
+}
 
 
 

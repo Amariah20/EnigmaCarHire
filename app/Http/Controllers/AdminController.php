@@ -189,7 +189,7 @@ class AdminController extends Controller
                 $reservation->total_price = $rental_days * $vehicle->daily_rate;
             } else {
                 // Handle the case where return date is before pick_up (this shouldn't happen)
-                return redirect()->back()->withErrors(['error' => 'Return date must be after or on the same day as pickup date']);
+                return redirect()->back()->withErrors(['error' => 'Return date must be after or on the same day as pickup date']) ->withInput();
             }
         } else {
             // If dates are not provided, keep the existing total_price
@@ -236,7 +236,7 @@ class AdminController extends Controller
 
             // If the vehicle is already reserved or undergoing maintenance, return an error
             if ($existingReservation || $maintenanceSchedule) {
-            return redirect()->back()->withErrors(['error' => 'The vehicle is not available for the selected dates.']);
+            return redirect()->back()->withErrors(['error' => 'The vehicle is not available for the selected dates.']) ->withInput();
             }
 
 
@@ -328,7 +328,7 @@ class AdminController extends Controller
              // Check if the payment status is "cancelled"
              if ($payment->status == 'cancelled') {
                 // Redirect back with an error message
-                return redirect()->back()->withErrors(['error' => 'You cannot edit a payment record that is associated with a cancelled reservation.']);
+                return redirect()->back()->withErrors(['error' => 'You cannot edit a payment record that is associated with a cancelled reservation.']) ->withInput();
                 }
 
         return view('admin-panel.editPayment', compact('payment'));
@@ -394,7 +394,7 @@ class AdminController extends Controller
         //$reservation = Reservation::find($reservation_id);
     
         if (!$reservation) {
-            return redirect()->back()->withErrors('Reservation not found.');
+            return redirect()->back()->withErrors('Reservation not found.') ->withInput();
         }
 
         $payment = $reservation->payment;

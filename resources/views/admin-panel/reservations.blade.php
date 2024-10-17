@@ -22,7 +22,6 @@
     </div>
 @endif
 
-<!--<a href="{{ route('AddVehicle') }}" class="btn btn-primary">Add Vehicle</a>-->
 
 
 <table class="table table-hover">

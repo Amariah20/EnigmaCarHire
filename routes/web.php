@@ -52,3 +52,6 @@ Route::get('/deleteInsurance/{insurance_id}', [AdminController::class, 'deleteIn
 
 
 Route::get('/viewVehicle/{vehicle_id}', [AdminController::class, 'viewVehicle'])->name('viewVehicle');
+
+Route::get('/customers', [AdminController::class, 'showCustomers'])->name('customers');
+Route::get('/additionalDrivers', [AdminController::class, 'showadditionalDrivers'])->name('additionalDrivers');

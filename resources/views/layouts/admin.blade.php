@@ -96,8 +96,8 @@
             <a href="#about"> <i class="bi bi-people-fill"></i> Users</a>
 
             <div class="dropdown-content">
-                <a href="#"><i class="bi bi-arrow-return-right"></i> Customers</a>
-                <a href="#"> <i class="bi bi-arrow-return-right"></i> Additional Drivers</a>
+                <a href="{{route('customers')}}"><i class="bi bi-arrow-return-right"></i> Customers</a>
+                <a href="{{route('additionalDrivers')}}"> <i class="bi bi-arrow-return-right"></i> Additional Drivers</a>
                 <a href="#"><i class="bi bi-arrow-return-right"></i> Admin</a>
                 </div>
 

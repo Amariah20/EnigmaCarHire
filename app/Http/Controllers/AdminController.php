@@ -8,6 +8,8 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Models\Insurance;
+use App\Models\Customer;
+use App\Models\AdditionalDriver;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -702,6 +704,19 @@ class AdminController extends Controller
 
         // Pass the vehicle data to the view
         return view('admin-panel.viewVehicle', compact('vehicle', 'reservations', 'insurances', 'maintenances', 'totalInsurance', 'totalMaintenance'));
+    }
+
+
+    public function showCustomers(){
+
+        $customers = Customer::all();
+        return view('admin-panel.customers', compact('customers'));
+    }
+
+    public function showadditionalDrivers(){
+
+        $additionalDrivers = AdditionalDriver::all();
+        return view ('admin-panel.additionalDrivers', compact('additionalDrivers'));
     }
 
 

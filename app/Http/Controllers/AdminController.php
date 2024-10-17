@@ -453,9 +453,9 @@ class AdminController extends Controller
 
                 
 
-                return redirect()->back()->withErrors(['error'=> 'The vehicle is not available for maintenance during the selected date.']);
+                return redirect()->back()->withErrors(['error'=> 'The vehicle is not available for maintenance during the selected date.'])->withInput();
             } else if ($due_date >= $pick_up_date && $due_date<= $return_date){
-                return redirect()->back()->withErrors(['error'=> 'The vehicle is not available for maintenance during the selected date.']);
+                return redirect()->back()->withErrors(['error'=> 'The vehicle is not available for maintenance during the selected date.'])->withInput();
 
             }
         
@@ -549,9 +549,9 @@ class AdminController extends Controller
 
                 
 
-                return redirect()->back()->withErrors(['error'=> 'The vehicle is not available for maintenance during the selected date.']);
+                return redirect()->back()->withErrors(['error'=> 'The vehicle is not available for maintenance during the selected date.']) ->withInput();
             } else if ($due_date >= $pick_up_date && $due_date<= $return_date){
-                return redirect()->back()->withErrors(['error'=> 'The vehicle is not available for maintenance during the selected date.']);
+                return redirect()->back()->withErrors(['error'=> 'The vehicle is not available for maintenance during the selected date.']) ->withInput();
 
             }
         

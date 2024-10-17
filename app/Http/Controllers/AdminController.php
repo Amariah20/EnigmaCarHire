@@ -424,6 +424,48 @@ class AdminController extends Controller
         ]);
 
 
+
+        ///LOGIC TO PREVENT MAINTENANCE DURING RENTED PERIOD. Unless maintenance has been cancelled or completed. 
+
+        if($req->status !== 'completed' && $req->status !== 'cancelled'){
+
+            $due_date = Carbon::parse($req->due_date)->toDateString();
+
+           
+
+         
+             $existingReservations = Reservation::where('vehicle_id', $req->vehicle_id)
+                            ->select('pick_up', 'return')
+                            ->get();
+                            
+                    
+                            
+            foreach ($existingReservations as $reservation) {
+            $pick_up_date = Carbon::parse($reservation->pick_up)->toDateString();
+            $return_date = Carbon::parse($reservation->return)->toDateString();
+
+
+           
+           
+
+
+            if($due_date == $pick_up_date || $due_date == $return_date){
+
+                
+
+                return redirect()->back()->withErrors(['error'=> 'The vehicle is not available for maintenance during the selected date.']);
+            } else if ($due_date >= $pick_up_date && $due_date<= $return_date){
+                return redirect()->back()->withErrors(['error'=> 'The vehicle is not available for maintenance during the selected date.']);
+
+            }
+        
+        
+       
+        
+        }
+
+    }
+
            
 
         $maintenance= new \App\Models\Maintenance();
@@ -478,6 +520,47 @@ class AdminController extends Controller
     $req->validate($validationRules);
 
 
+
+             ///LOGIC TO PREVENT MAINTENANCE DURING RENTED PERIOD. Unless maintenance has been cancelled or completed. 
+
+        if($req->status !== 'completed' && $req->status !== 'Cancelled'){
+
+            $due_date = Carbon::parse($req->due_date)->toDateString();
+
+           
+
+         
+             $existingReservations = Reservation::where('vehicle_id', $req->vehicle_id)
+                            ->select('pick_up', 'return')
+                            ->get();
+                            
+                    
+                            
+            foreach ($existingReservations as $reservation) {
+            $pick_up_date = Carbon::parse($reservation->pick_up)->toDateString();
+            $return_date = Carbon::parse($reservation->return)->toDateString();
+
+
+           
+           
+
+
+            if($due_date == $pick_up_date || $due_date == $return_date){
+
+                
+
+                return redirect()->back()->withErrors(['error'=> 'The vehicle is not available for maintenance during the selected date.']);
+            } else if ($due_date >= $pick_up_date && $due_date<= $return_date){
+                return redirect()->back()->withErrors(['error'=> 'The vehicle is not available for maintenance during the selected date.']);
+
+            }
+        
+        
+       
+        
+        }
+
+    }
 
 
       

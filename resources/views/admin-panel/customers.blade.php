@@ -1,4 +1,3 @@
-
 @extends('layouts.admin')
 
 @section('content')
@@ -46,21 +45,17 @@
   @foreach($customers as $customer)
     <tr>
       
-      <td>{{$customer->customer_id}}</td>
-      <td> {{ $customer->name}}</td>
-      <td>{{$customer->email}}</td>
-      <td> {{$customer->phone_number}}</td>
-      <td> {{$customer->license_number}}</td>
-      <td> {{$customer->issuing_country}}</td>
+      <td> {{$customer->customer_id}} </td>
+      <td> {{$customer->name}} </td>
+      <td> {{$customer->email}} </td>
+      <td> {{$customer->phone_number}} </td>
+      <td> {{$customer->license_number}} </td>
+      <td> {{$customer->issuing_country}} </td>
      
-    
-
    
 </tr>
  @endforeach
  </tbody>
  </table>
-
-
 
 @endsection

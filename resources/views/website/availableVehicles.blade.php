@@ -19,22 +19,7 @@
 @endif
 
 
-<div class="container mt-5">
-    <h3 class="text-center">Find Your Rental Car</h3>
-    <form id="rental-form" class="rental-form-container d-flex justify-content-center" method="get" action="{{route('showAvailableVehicles')}}">
-        <div class="input-group me-2">
-            <span class="input-group-text">Collection</span>
-            <input type="datetime-local" name="collection" class="form-control" required>
-        </div>
-        <div class="input-group me-2">
-            <span class="input-group-text">Return</span>
-            <input type="datetime-local" name="return" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-secondary">Search</button>
-    </form>
-</div>
 
-<br><br>
 
 <h3 class="text-center fw-bold">Available Vehicles</h3> 
 <br><br>
@@ -51,9 +36,14 @@
                         <p class="card-text mb-1"><small>{{ ucfirst($vehicle->make_model) }}</small></p> 
                         <p class="card-text mb-1"><small>{{ ucfirst($vehicle->type) }}</small></p> 
                         <p class="card-text mb-1"><small>{{ ucfirst($vehicle->transmission) }}</small></p> 
-                        <div class="mt-auto d-flex justify-content-end"> <!-- Push button to the bottom-right -->
-                        <button type="submit" class="btn btn-secondary">Book</button>
-                    </div>
+                       
+                    <form method="POST" action="{{ route('bookVehicle', ['vehicle_id' => $vehicle->vehicle_id]) }}">
+                        @csrf
+                        <input type="hidden" name="collection" value="{{ session('pick_up_date') }}">
+                        <input type="hidden" name="return" value="{{ session('return_date') }}">
+                        <button type="submit" class="btn btn-secondary">Book Now</button>
+                    </form>
+
                     </div>
                 </div>
             </div>

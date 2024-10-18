@@ -77,4 +77,26 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+
+     /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        // Validate the incoming request
+        $this->validator($request->all())->validate();
+
+        // Create the new user
+        $user = $this->create($request->all());
+
+        // Log the new user in
+        Auth::login($user);
+
+        // Redirect to the intended page or a fallback page
+        return redirect()->intended($this->redirectTo); // Redirect to intended or fallback to '/'
+    }
 }

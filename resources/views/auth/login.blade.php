@@ -65,6 +65,14 @@
                             </div>
                         </div>
                     </form>
+
+
+                     <!-- Link to registration page -->
+                     <div class="row mt-3">
+                        <div class="col-md-8 offset-md-4">
+                            <a href="{{ route('register') }}">{{ __('Not registered? Create an account') }}</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

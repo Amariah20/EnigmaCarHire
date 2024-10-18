@@ -7,6 +7,8 @@ use App\Models\Vehicle;
 use App\Models\Reservation;
 use App\Models\Maintenance;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 
 class MainWebsiteController extends Controller
 {
@@ -141,12 +143,31 @@ class MainWebsiteController extends Controller
 
                 // Return the available vehicles to your view or as a response
                 return view('website.availableVehicles', compact('vehicles'));
-
-
-
-            
-               
+          
     
+    }
+
+
+    public function bookVehicle(Request $request){
+
+
+        // Check if user is logged in
+    if (!Auth::check()) {
+        // If not logged in, redirect to login, and Laravel will handle showing the login form
+        return redirect()->route('login');
+    }
+
+    // Store booking details in session to continue after login
+    session([
+        'vehicle_id' => $request->vehicle_id,
+        'pick_up_date' => $request->collection,
+        'return_date' => $request->return,
+    ]);
+
+    // If user is logged in, proceed to the next step (e.g., add-ons or payment)
+    return redirect()->route('website.ourFleet');
+
+
     }
 
 

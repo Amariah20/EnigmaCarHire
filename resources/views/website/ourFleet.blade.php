@@ -4,7 +4,30 @@
 <div class="container mt-5">
  
 
+
+
+
+ <!-- Sorting Dropdown -->
+ <div class="d-flex justify-content-end mb-3"> 
+    <!-- Sort/Filter Form -->
+    <form id="sortForm" action="{{ route('sortVehiclePrice') }}" method="GET">
+        <select name="sort" id="sortDropdown" class="form-select">
+            <option value="">Filter/Sort</option>
+            <option value="price-ascending">Price (Ascending)</option>
+            <option value="price-descending">Price (Descending)</option>
+        </select>
+        <button type="submit">Sort/Filter</button>
+    </form>
+</div>
+
+
+
+
+
+
+
  
+
 
 
     <div class="container mt-5">

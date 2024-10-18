@@ -30,7 +30,7 @@
 
   <tr>
             <th scope="col" colspan="6">Total</th>
-            <th scope="col">{{ $totalPrice }}</th>
+            <th scope="col">{{  number_format($totalPrice,2) }}</th>
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
@@ -64,7 +64,7 @@
       <td>{{$maintenance->maintenance_type}}</td>
       <td>{{$maintenance->description}}</td>
       <td>{{$maintenance->due_date}}</td>
-      <td> SCR {{$maintenance->price}}</td>
+      <td> SCR {{ number_format($maintenance->price,2)}}</td>
       <td>{{$maintenance->status}}</td>
       <td><a href="{{route('editMaintenance', ['maintenance_id'=>$maintenance->maintenance_id])}}"><i class="bi bi-pen-fill"></i></a></td>
       <td><a href="{{route('deleteMaintenance',  ['maintenance_id'=>$maintenance->maintenance_id])}}"><i class="bi bi-trash-fill"></a></i></td>

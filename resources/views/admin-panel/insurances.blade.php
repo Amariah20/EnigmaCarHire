@@ -31,7 +31,7 @@
 
   <tr>
             <th scope="col" colspan="4">Total</th>
-            <th scope="col">{{ $totalPrice }}</th>
+            <th scope="col">{{  number_format($totalPrice,2) }}</th>
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
@@ -62,7 +62,7 @@
     </td>
       <td> {{ $insurance->vehicle ? $insurance->vehicle->vehicle_name : 'N/A' }}</td>
       <td>{{$insurance->due_date}}</td>
-      <td> SCR {{$insurance->price}}</td>
+      <td> SCR {{ number_format($insurance->price,2)}}</td>
       <td> {{$insurance->status}}</td>
       <td><a href="{{route('editInsurance', ['insurance_id'=>$insurance->insurance_id])}}"><i class="bi bi-pen-fill"></i></a></td>
       <td><a href="{{route('deleteInsurance',   ['insurance_id'=>$insurance->insurance_id])}}"><i class="bi bi-trash-fill"></a></i></td>

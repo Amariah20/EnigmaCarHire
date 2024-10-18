@@ -31,8 +31,8 @@
 
   <tr>
             <th scope="col" colspan="2">Totals</th>
-            <th scope="col">{{ $totalPrice }}</th>
-            <th scope="col">{{ $totalPaid }}</th>
+            <th scope="col">{{  number_format($totalPrice,2) }}</th>
+            <th scope="col">{{  number_format($totalPaid,2) }}</th>
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
@@ -62,9 +62,9 @@
           {{ $payment->reservation_id }}
         </a>
       </td>
-      <td>{{ $payment->reservation ? $payment->reservation->total_price : 'N/A' }}</td>
-      <td>{{ $payment->total_paid }}</td> 
-      <td>{{$payment->payment_date}}</td>
+      <td>{{  number_format($payment->reservation ? $payment->reservation->total_price : 'N/A',2) }}</td>
+      <td>{{  number_format($payment->total_paid,2) }}</td> 
+      <td>{{ $payment->payment_date,2}}</td>
       <td>{{ $payment->status}}</td>
       <td><a href="{{route('editPayment', ['payment_id'=>$payment->payment_id])}}"><i class="bi bi-pen-fill"></i></a></td>
 

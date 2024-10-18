@@ -64,7 +64,7 @@
       <td> {{$reservation->reservation_date}}</td>
       <td> {{$reservation->pick_up}}</td>
       <td> {{$reservation->return}}</td>
-      <td> {{$reservation->total_price}}</td>
+      <td> {{ number_format($reservation->total_price,2)}}</td>
       <td> {{$reservation->status}}</td>
       <td><a href="{{route('editReservation', ['reservation_id'=>$reservation->reservation_id])}}"><i class="bi bi-pen-fill"></i></a></td>
      <!-- <td><a href="{{route('deleteReservation', ['reservation_id'=>$reservation->reservation_id])}}"><i class="bi bi-trash-fill"></a></i></td>--> <!--no need to delete reservations. simply mark as cancelled-->

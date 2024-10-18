@@ -12,7 +12,7 @@
         <div class="card-body">
             <h3 class="card-title">Financial Overview</h3>
             <h4 class="card-text">Outstanding payments</h4>
-            <h5 class="card-text">SCR {{$OutstandingPayments}} </h5>
+            <h5 class="card-text">SCR {{ number_format($OutstandingPayments,2)}} </h5>
            
             <a href="{{ route('payments') }}" class="btn btn-secondary">View Details</a>
         </div>

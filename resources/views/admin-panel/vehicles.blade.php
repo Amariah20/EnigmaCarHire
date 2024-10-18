@@ -57,7 +57,7 @@
       <td>{{$vehicle->type}}</td>
       <td> {{$vehicle->transmission}}</td>
       <td>{{$vehicle->status}}</td>
-      <td> SCR {{$vehicle->daily_rate}}</td>
+      <td> SCR {{  number_format($vehicle->daily_rate, 2)}}</td>
       <td> <img src="{{ asset('public/vehicles/'.$vehicle->image) }}"  style="width:50px; height:50px"></td>
       <td><a href="{{route('editVehicle', ['vehicle_id'=>$vehicle->vehicle_id])}}"><i class="bi bi-pen-fill"></i></a></td>
       <td><a href="{{route('deleteVehicle', ['vehicle_id'=>$vehicle->vehicle_id])}}"><i class="bi bi-trash-fill"></a></i></td>

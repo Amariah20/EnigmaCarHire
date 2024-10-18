@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Models\Reservation;
+use App\Models\Maintenance;
 use Carbon\Carbon;
 
 class MainWebsiteController extends Controller
@@ -104,8 +105,29 @@ class MainWebsiteController extends Controller
                         ->where('status', '!=', 'cancelled');// Reservation starts before or on return date
                 })->pluck('vehicle_id'); // Get the list of reserved vehicle IDs
 
-                // Step 2: Get all vehicles that are NOT in the reserved vehicles list
-                $vehicles = Vehicle::whereNotIn('vehicle_id', $reservedVehicles)->get();
+
+
+
+
+
+
+
+                $pick_up_date_check = Carbon::parse($req->collection)->subDay();
+
+
+                // Check for maintenance schedules
+                $maintenanceSchedule = Maintenance::where(function($query) use ($pick_up_date_check, $return_date){
+                $query->where('status', '!=', 'completed') // Exclude completed maintenance
+                    ->where('status', '!=', 'cancelled') // Exclude cancelled maintenance
+                    ->where('due_date', '>=', $pick_up_date_check)
+                    ->where('due_date', '<=', $return_date);
+                })->pluck('vehicle_id');
+
+
+                $excludedVehicles = $reservedVehicles->merge($maintenanceSchedule);
+
+
+                $vehicles = Vehicle::whereNotIn('vehicle_id', $excludedVehicles)->get();
 
                 // Return the available vehicles to your view or as a response
                 return view('website.availableVehicles', compact('vehicles'));

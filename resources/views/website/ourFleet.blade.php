@@ -79,7 +79,7 @@
 
 
 
-    <div class="container mt-5">
+<div class="container mt-5">
     <h3 class="text-center">Find Your Rental Car</h3>
     <form id="rental-form" class="rental-form-container d-flex justify-content-center" method="get" action="{{route('showAvailableVehicles')}}">
         <div class="input-group me-2">

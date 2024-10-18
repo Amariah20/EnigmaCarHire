@@ -23,7 +23,7 @@
                 <h4>Find Your Rental Car</h4>
             </div>
             <div class="card-body">
-                <form id="rental-form">
+                <form id="rental-form" method="get" action="{{route('showAvailableVehicles')}}">
                    
                     <div class="mb-3">
                         <label class="form-label">Collection Date & Time</label>

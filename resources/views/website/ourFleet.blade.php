@@ -23,7 +23,7 @@
 <div class="d-flex justify-content-end mb-3"> 
     <form id="filterForm" action="{{ route('filterVehicle') }}" method="GET">
         <div class="filter-options">
-            <p>Filter by Vehicle Type:</p>
+            <p>Filter:</p>
             @foreach($allVehicleTypes as $type)
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="types[]" value="{{ $type }}" id="type-{{ $type }}"
@@ -34,7 +34,7 @@
             </div>
             @endforeach
 
-            <p>Filter by Transmission Type:</p>
+        
             @foreach($allTransmissions as $transmission)
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="transmissions[]" value="{{ $transmission }}" id="transmission-{{ $transmission }}"

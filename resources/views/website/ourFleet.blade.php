@@ -24,12 +24,23 @@
     <form id="filterForm" action="{{ route('filterVehicle') }}" method="GET">
         <div class="filter-options">
             <p>Filter by Vehicle Type:</p>
-            @foreach($allVehicleTypes as $type) <!-- Display full list of vehicle types -->
+            @foreach($allVehicleTypes as $type)
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="types[]" value="{{ $type }}" id="type-{{ $type }}"
-                       {{ in_array($type, request()->types ?? []) ? 'checked' : '' }}> <!-- Keep selected types checked -->
+                       {{ in_array($type, request()->types ?? []) ? 'checked' : '' }}>
                 <label class="form-check-label" for="type-{{ $type }}">
                     {{ $type }}
+                </label>
+            </div>
+            @endforeach
+
+            <p>Filter by Transmission Type:</p>
+            @foreach($allTransmissions as $transmission)
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="transmissions[]" value="{{ $transmission }}" id="transmission-{{ $transmission }}"
+                       {{ in_array($transmission, request()->transmissions ?? []) ? 'checked' : '' }}>
+                <label class="form-check-label" for="transmission-{{ $transmission }}">
+                    {{ $transmission }}
                 </label>
             </div>
             @endforeach
@@ -37,6 +48,7 @@
         <button type="submit" class="btn btn-secondary mt-2">Filter</button>
     </form>
 </div>
+
 
 
 

@@ -1,6 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+
+
+@if($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach($errors->all() as $error)
+        <li>{{ $error}}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 <div class="container">
         <div class="card homepage-card shadow-sm">
             <div class="card-header text-center">
@@ -11,7 +27,7 @@
                    
                     <div class="mb-3">
                         <label class="form-label">Collection Date & Time</label>
-                        <input type="datetime-local" name="pick_up" class="form-control" required>
+                        <input type="datetime-local" name="collection" class="form-control" required>
                     </div>
 
                     <div class="mb-3">

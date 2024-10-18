@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
+use App\Models\Reservation;
+use Carbon\Carbon;
 
 class MainWebsiteController extends Controller
 {
@@ -78,7 +80,47 @@ class MainWebsiteController extends Controller
         // Return the view with the filtered vehicles and the full filter lists
         return view('website.ourFleet', compact('vehicles', 'allVehicleTypes', 'allTransmissions'));
     }
+
     
+    public function showAvailableVehicles(Request $req){
+
+        $pick_up_date = Carbon::parse($req->collection);
+        $return_date = Carbon::parse($req->return);
+
+    
+            // Ensure that the return date is after the pickup date
+            if (!$return_date->greaterThanOrEqualTo($pick_up_date)) {
+
+                return redirect()->back()->withErrors(['error' => 'Return date must be after or on the same day as pickup date']) ->withInput();
+            }
+
+
+              
+
+                // Step 1: Get all vehicle IDs that are reserved during the selected dates
+                $reservedVehicles = Reservation::where(function ($query) use ($pick_up_date, $return_date) {
+                    $query->where('return', '>=', $pick_up_date) // Reservation ends after or on pick-up date
+                        ->where('pick_up', '<=', $return_date); // Reservation starts before or on return date
+                })->pluck('vehicle_id'); // Get the list of reserved vehicle IDs
+
+                // Step 2: Get all vehicles that are NOT in the reserved vehicles list
+                $vehicles = Vehicle::whereNotIn('vehicle_id', $reservedVehicles)->get();
+
+                // Return the available vehicles to your view or as a response
+                return view('website.availableVehicles', compact('vehicles'));
+
+
+
+            
+            
+               
+    
+    }
+
+
+
+
+
 
     
 

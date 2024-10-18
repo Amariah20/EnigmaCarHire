@@ -1,6 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+
+
+
+@if($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach($errors->all() as $error)
+        <li>{{ $error}}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 <div class="container mt-5">
  
 
@@ -64,10 +81,10 @@
 
     <div class="container mt-5">
     <h3 class="text-center">Find Your Rental Car</h3>
-    <form id="rental-form" class="rental-form-container d-flex justify-content-center">
+    <form id="rental-form" class="rental-form-container d-flex justify-content-center" method="get" action="{{route('showAvailableVehicles')}}">
         <div class="input-group me-2">
             <span class="input-group-text">Collection</span>
-            <input type="datetime-local" name="pick_up" class="form-control" required>
+            <input type="datetime-local" name="collection" class="form-control" required>
         </div>
         <div class="input-group me-2">
             <span class="input-group-text">Return</span>

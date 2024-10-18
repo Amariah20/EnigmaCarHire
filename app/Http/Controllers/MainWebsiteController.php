@@ -85,9 +85,19 @@ class MainWebsiteController extends Controller
     
     public function showAvailableVehicles(Request $req){
 
+        $today = Carbon::now(); // Get today's date
         $pick_up_date = Carbon::parse($req->collection);
         $return_date = Carbon::parse($req->return);
 
+
+
+        if ($pick_up_date->isBefore($today)) {
+            return redirect()->back()->withErrors(['error' => 'Pick-up date cannot be in the past'])->withInput();
+        }
+    
+        if ($return_date->isBefore($today)) {
+            return redirect()->back()->withErrors(['error' => 'Return date cannot be in the past'])->withInput();
+        }
     
             // Ensure that the return date is after the pickup date
             if (!$return_date->greaterThanOrEqualTo($pick_up_date)) {

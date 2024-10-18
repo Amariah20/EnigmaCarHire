@@ -100,7 +100,8 @@ class MainWebsiteController extends Controller
                 // Step 1: Get all vehicle IDs that are reserved during the selected dates
                 $reservedVehicles = Reservation::where(function ($query) use ($pick_up_date, $return_date) {
                     $query->where('return', '>=', $pick_up_date) // Reservation ends after or on pick-up date
-                        ->where('pick_up', '<=', $return_date); // Reservation starts before or on return date
+                        ->where('pick_up', '<=', $return_date)
+                        ->where('status', '!=', 'cancelled');// Reservation starts before or on return date
                 })->pluck('vehicle_id'); // Get the list of reserved vehicle IDs
 
                 // Step 2: Get all vehicles that are NOT in the reserved vehicles list

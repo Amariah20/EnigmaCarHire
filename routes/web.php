@@ -64,3 +64,4 @@ Route::get('/ourFleet', [MainWebsiteController::class, 'ourFleet'])->name('ourFl
 
 
 Route::get('/sortVehiclePrice', [MainWebsiteController::class, 'sortVehiclePrice'])->name('sortVehiclePrice');
+Route::get('/filterVehicle', [MainWebsiteController::class, 'filterVehicle'])->name('filterVehicle');

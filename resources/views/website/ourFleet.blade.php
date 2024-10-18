@@ -9,16 +9,36 @@
 
  <!-- Sorting Dropdown -->
  <div class="d-flex justify-content-end mb-3"> 
-    <!-- Sort/Filter Form -->
     <form id="sortForm" action="{{ route('sortVehiclePrice') }}" method="GET">
         <select name="sort" id="sortDropdown" class="form-select">
-            <option value="">Filter/Sort</option>
+            <option value="">Sort</option>
             <option value="price-ascending">Price (Ascending)</option>
             <option value="price-descending">Price (Descending)</option>
         </select>
-        <button type="submit">Sort/Filter</button>
+        <button type="submit" class="btn btn-secondary mt-2">Sort</button>
     </form>
 </div>
+
+<!-- Filter Checklist -->
+<div class="d-flex justify-content-end mb-3"> 
+    <form id="filterForm" action="{{ route('filterVehicle') }}" method="GET">
+        <div class="filter-options">
+            <p>Filter by Vehicle Type:</p>
+            @foreach($allVehicleTypes as $type) <!-- Display full list of vehicle types -->
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="types[]" value="{{ $type }}" id="type-{{ $type }}"
+                       {{ in_array($type, request()->types ?? []) ? 'checked' : '' }}> <!-- Keep selected types checked -->
+                <label class="form-check-label" for="type-{{ $type }}">
+                    {{ $type }}
+                </label>
+            </div>
+            @endforeach
+        </div>
+        <button type="submit" class="btn btn-secondary mt-2">Filter</button>
+    </form>
+</div>
+
+
 
 
 

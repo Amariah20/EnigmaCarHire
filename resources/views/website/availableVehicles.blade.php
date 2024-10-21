@@ -39,8 +39,9 @@
                        
                     <form method="POST" action="{{ route('bookVehicle') }}">
                         @csrf
-                        <input type="hidden" name="collection" value="{{ session('pick_up_date') }}">
-                        <input type="hidden" name="return" value="{{ session('return_date') }}">
+                        <input type="hidden" name="collection" value="{{ $pick_up_date }}">
+                        <input type="hidden" name="return" value="{{ $return_date }}">
+                        <input type="hidden" name="vehicle_id" value="{{ $vehicle->vehicle_id }}">
                         <button type="submit" class="btn btn-secondary">Book Now</button>
                     </form>
 

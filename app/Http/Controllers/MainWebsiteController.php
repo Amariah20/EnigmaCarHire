@@ -157,31 +157,25 @@ class MainWebsiteController extends Controller
 
                 $vehicles = Vehicle::whereNotIn('vehicle_id', $excludedVehicles)->get();
 
+                
+
                 // Return the available vehicles to your view or as a response
-                return view('website.availableVehicles', compact('vehicles'));
+                return view('website.availableVehicles', compact('vehicles', 'pick_up_date', 'return_date'));
           
     
     }
 
 
-    public function bookVehicle(Request $request){
-
-    
-       
-
+    public function bookVehicle(Request $request)
+    {   
 
         
         // Check if user is logged in
     if(!Auth::guard('customers')->check()){
 
-       
-
-       
-
         session(['url.intended' => url()->previous()]);
 
 
-        
         // If not logged in, redirect to login, and Laravel will handle showing the login form
         return redirect()->route('login');
     }
@@ -191,22 +185,37 @@ class MainWebsiteController extends Controller
         'vehicle_id' => $request->vehicle_id,
         'pick_up_date' => $request->collection,
         'return_date' => $request->return,
+        
     ]);
 
+
+    $vehicle_id = $request->vehicle_id;
+    $pick_up_date  =  $request->collection;
+    $return_date = $request->return;
+
+
+
     // If user is logged in, proceed to the next step 
-    return redirect()->route('addOns');
+   
+    return view('website.addOns', compact('vehicle_id', 'pick_up_date', 'return_date'));
+
     
 
 
     }
 
 
-    public function addOns (Request $req){
+    public function addOns(Request $req)
+{
+    // Retrieve the session data
+    $vehicle_id = session('vehicle_id');
+    $pick_up_date = session('pick_up_date');
+    $return_date = session('return_date');
 
-        return view ('website.addOns');
+    // Pass the session data to the view
+   
+}
 
-
-    }
 
 
 

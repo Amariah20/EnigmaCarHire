@@ -56,7 +56,7 @@ class LoginController extends Controller
         // Attempt to log the customer in
         if (Auth::guard('customers')->attempt($request->only('email', 'password'))) {
             // If successful, redirect to the intended location
-            return redirect()->intended('/'); // Change this to your intended path
+            return redirect()->intended('/ourFleet'); // Change this to your intended path
         }
 
         // If the login attempt was unsuccessful, redirect back with an error
@@ -71,9 +71,15 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function logout(Request $request)
+    public function logout(Request $request) //NOT WORKING. I PUT THE METHOD IN MainWebsiteController 
+
+   
     {
+
+       
+
         Auth::guard('customers')->logout();
+       
         return redirect('/'); // Change this to your desired path after logout
     }
 }

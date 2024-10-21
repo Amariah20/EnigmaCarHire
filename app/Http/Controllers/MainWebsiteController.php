@@ -12,6 +12,22 @@ use Illuminate\Support\Facades\Auth;
 
 class MainWebsiteController extends Controller
 {
+
+
+
+    public function logout(Request $request)
+
+   
+    {
+
+       
+
+        Auth::guard('customers')->logout();
+       
+        return redirect('/homepage'); // Change this to your desired path after logout
+    }
+
+
     public function homepage(){
 
         $vehicles = Vehicle::all();
@@ -164,8 +180,9 @@ class MainWebsiteController extends Controller
         'return_date' => $request->return,
     ]);
 
-    // If user is logged in, proceed to the next step (e.g., add-ons or payment)
-    return redirect()->route('website.ourFleet');
+    // If user is logged in, proceed to the next step 
+    return redirect()->route('website.homepage');//CHANGE TO Addons. chatGPT steps given on 18/10/2024
+    
 
 
     }

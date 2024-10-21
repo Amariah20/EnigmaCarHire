@@ -93,6 +93,9 @@ class RegisterController extends Controller
         // Create the new user
         $user = $this->create($request->all());
 
+        
+
+
         // Log the new user in
         Auth::login($user);
 

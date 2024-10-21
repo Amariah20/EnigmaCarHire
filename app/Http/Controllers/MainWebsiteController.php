@@ -166,9 +166,22 @@ class MainWebsiteController extends Controller
 
     public function bookVehicle(Request $request){
 
+    
+       
 
+
+        
         // Check if user is logged in
-    if (!Auth::check()) {
+    if(!Auth::guard('customers')->check()){
+
+       
+
+       
+
+        session(['url.intended' => url()->previous()]);
+
+
+        
         // If not logged in, redirect to login, and Laravel will handle showing the login form
         return redirect()->route('login');
     }
@@ -181,13 +194,19 @@ class MainWebsiteController extends Controller
     ]);
 
     // If user is logged in, proceed to the next step 
-    return redirect()->route('website.homepage');//CHANGE TO Addons. chatGPT steps given on 18/10/2024
+    return redirect()->route('addOns');
     
 
 
     }
 
 
+    public function addOns (Request $req){
+
+        return view ('website.addOns');
+
+
+    }
 
 
 

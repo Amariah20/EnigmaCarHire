@@ -69,4 +69,5 @@ Route::get('/ourFleet', [MainWebsiteController::class, 'ourFleet'])->name('ourFl
 Route::get('/sortVehiclePrice', [MainWebsiteController::class, 'sortVehiclePrice'])->name('sortVehiclePrice');
 Route::get('/filterVehicle', [MainWebsiteController::class, 'filterVehicle'])->name('filterVehicle');
 Route::get('/showAvailableVehicles', [MainWebsiteController::class, 'showAvailableVehicles'])->name('showAvailableVehicles');
-Route::post('/bookVehicle/{vehicle_id}', [MainWebsiteController::class, 'bookVehicle'])->name('bookVehicle')->middleware('auth');
+Route::post('/bookVehicle', [MainWebsiteController::class, 'bookVehicle'])->name('bookVehicle');
+Route::post('/addOns', [MainWebsiteController::class, 'addOns'])->name('addOns');

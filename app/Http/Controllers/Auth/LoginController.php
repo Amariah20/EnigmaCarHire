@@ -56,7 +56,9 @@ class LoginController extends Controller
         // Attempt to log the customer in
         if (Auth::guard('customers')->attempt($request->only('email', 'password'))) {
             // If successful, redirect to the intended location
-            return redirect()->intended('/ourFleet'); // Change this to your intended path
+            //return redirect()->intended('/ourFleet'); // Change this to your intended path
+            return redirect()->intended(session('url.intended', '/homepage'));
+            
         }
 
         // If the login attempt was unsuccessful, redirect back with an error

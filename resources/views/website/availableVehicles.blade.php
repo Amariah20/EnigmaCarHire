@@ -37,7 +37,7 @@
                         <p class="card-text mb-1"><small>{{ ucfirst($vehicle->type) }}</small></p> 
                         <p class="card-text mb-1"><small>{{ ucfirst($vehicle->transmission) }}</small></p> 
                        
-                    <form method="POST" action="{{ route('bookVehicle', ['vehicle_id' => $vehicle->vehicle_id]) }}">
+                    <form method="POST" action="{{ route('bookVehicle') }}">
                         @csrf
                         <input type="hidden" name="collection" value="{{ session('pick_up_date') }}">
                         <input type="hidden" name="return" value="{{ session('return_date') }}">

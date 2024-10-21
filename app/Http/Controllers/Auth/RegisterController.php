@@ -30,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+ //   protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -40,6 +40,15 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+
+    public function showRegistrationForm(Request $request)
+    {
+        // Store the intended URL in the session
+        session(['url.intended' => url()->previous()]);
+
+        return view('auth.register'); // Your registration view
     }
 
     /**
@@ -97,9 +106,10 @@ class RegisterController extends Controller
 
 
         // Log the new user in
-        Auth::login($user);
+        Auth::guard('customers')->login($user);
 
         // Redirect to the intended page or a fallback page
-        return redirect()->intended($this->redirectTo); // Redirect to intended or fallback to '/'
+       // return redirect()->intended($this->redirectTo); // Redirect to intended or fallback to '/'
+       return redirect()->intended(session('url.intended', '/homepage'));
     }
 }

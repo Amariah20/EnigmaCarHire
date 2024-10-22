@@ -366,8 +366,7 @@ public function confirm(Request $req){
         }
 
 
-        dd ('SUCCESS');
-
+        return redirect('/homepage')->with('success', 'Reservation created successfully!');
 
 
 }

@@ -169,6 +169,7 @@ class AdminController extends Controller
         $reservation->pick_up = $req->collection;
         $reservation->return = $req->return;
         $reservation->status = $req->status;
+        $reservation->child_seat = $req->child_seat;
         
         // Fetch the vehicle to get the daily_rate
         $vehicle = Vehicle::where('vehicle_id', $req->vehicle_id)->first();

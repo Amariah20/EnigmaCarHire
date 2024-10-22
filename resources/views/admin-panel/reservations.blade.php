@@ -37,6 +37,7 @@
       <th scope="col">Collection</th>
       <th scope="col">Return</th>
       <th scope="col">Total Price</th>
+      <th scope="col">Child Seat</th>
       <th scope="col">Status</th>
       <th scope="col">Edit</th>
       <!--<th scope="col">Delete</th>-->
@@ -65,6 +66,7 @@
       <td> {{$reservation->pick_up}}</td>
       <td> {{$reservation->return}}</td>
       <td> {{ number_format($reservation->total_price,2)}}</td>
+      <td>{{ $reservation->child_seat ? 'Yes' : 'No' }}</td>
       <td> {{$reservation->status}}</td>
       <td><a href="{{route('editReservation', ['reservation_id'=>$reservation->reservation_id])}}"><i class="bi bi-pen-fill"></i></a></td>
      <!-- <td><a href="{{route('deleteReservation', ['reservation_id'=>$reservation->reservation_id])}}"><i class="bi bi-trash-fill"></a></i></td>--> <!--no need to delete reservations. simply mark as cancelled-->

@@ -37,6 +37,7 @@
             <p><strong>Pick-up Location:</strong> {{$reservation->pick_up}}</p>
             <p><strong>Return Location:</strong> {{$reservation->return}}</p>
             <p><strong>Total Price:</strong> {{$reservation->total_price}}</p>
+            <p><strong>{{ $reservation->child_seat ? 'Yes' : 'No' }}</strong></p>
             <p><strong>Status:</strong> {{$reservation->status}}</p>
             <a href="{{route('editReservation', ['reservation_id'=>$reservation->reservation_id])}}" class="btn btn-primary mt-3">Edit Reservation Details</a>
         </div>

@@ -73,6 +73,14 @@
   </div>
 
   <div class="mb-3">
+    <label class="form-label">Child Seat</label>
+    <select name="child_seat" id="child_seat" class="form-control" required>
+        <option value="1" {{ $reservation->child_seat == 1 ? 'selected' : '' }}>Yes</option>
+        <option value="0" {{ $reservation->child_seat == 0 ? 'selected' : '' }}>No</option>
+    </select>
+ </div>
+
+  <div class="mb-3">
         <label class="form-label">Status</label>
         <select name="status"  id="reservationStatus" class="form-control" required>
             <option value="confirmed" {{ $reservation->status == 'confirmed' ? 'selected' : '' }}>Confirmed</option>

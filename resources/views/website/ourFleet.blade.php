@@ -2,119 +2,103 @@
 
 @section('content')
 
-
-
 @if($errors->any())
 <div class="alert alert-danger">
     <ul>
         @foreach($errors->all() as $error)
-        <li>{{ $error}}</li>
+        <li>{{ $error }}</li>
         @endforeach
     </ul>
 </div>
 @endif
+
 @if (session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
     </div>
 @endif
-<div class="container mt-5">
- 
-
-
-
-
- <!-- Sorting Dropdown -->
- <div class="d-flex justify-content-end mb-3"> 
-    <form id="sortForm" action="{{ route('sortVehiclePrice') }}" method="GET">
-        <select name="sort" id="sortDropdown" class="form-select">
-            <option value="">Sort</option>
-            <option value="price-ascending">Price (Ascending)</option>
-            <option value="price-descending">Price (Descending)</option>
-        </select>
-        <button type="submit" class="btn btn-secondary mt-2">Sort</button>
-    </form>
-</div>
-
-<!-- Filter Checklist -->
-<div class="d-flex justify-content-end mb-3"> 
-    <form id="filterForm" action="{{ route('filterVehicle') }}" method="GET">
-        <div class="filter-options">
-            <p>Filter:</p>
-            @foreach($allVehicleTypes as $type)
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="types[]" value="{{ $type }}" id="type-{{ $type }}"
-                       {{ in_array($type, request()->types ?? []) ? 'checked' : '' }}>
-                <label class="form-check-label" for="type-{{ $type }}">
-                    {{ $type }}
-                </label>
-            </div>
-            @endforeach
-
-        
-            @foreach($allTransmissions as $transmission)
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="transmissions[]" value="{{ $transmission }}" id="transmission-{{ $transmission }}"
-                       {{ in_array($transmission, request()->transmissions ?? []) ? 'checked' : '' }}>
-                <label class="form-check-label" for="transmission-{{ $transmission }}">
-                    {{ $transmission }}
-                </label>
-            </div>
-            @endforeach
-        </div>
-        <button type="submit" class="btn btn-secondary mt-2">Filter</button>
-    </form>
-</div>
-
-
-
-
-
-
-
-
-
-
- 
-
-
 
 <div class="container mt-5">
-    <h3 class="text-center">Find Your Rental Car</h3>
-    <form id="rental-form" class="rental-form-container d-flex justify-content-center" method="get" action="{{route('showAvailableVehicles')}}">
-        <div class="input-group me-2">
-            <span class="input-group-text">Collection</span>
-            <input type="datetime-local" name="collection" class="form-control" required>
-        </div>
-        <div class="input-group me-2">
-            <span class="input-group-text">Return</span>
-            <input type="datetime-local" name="return" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-secondary">Search</button>
-    </form>
-</div>
 
-<br><br>
+    <!-- Sorting Dropdown -->
+    <div class="d-flex justify-content-end mb-3">
+        <form id="sortForm" action="{{ route('sortVehiclePrice') }}" method="GET" class="d-flex flex-column flex-md-row align-items-md-center">
+            <select name="sort" id="sortDropdown" class="form-select me-md-2 mb-2 mb-md-0">
+                <option value="">Sort</option>
+                <option value="price-ascending">Price (Ascending)</option>
+                <option value="price-descending">Price (Descending)</option>
+            </select>
+            <button type="submit" class="btn btn-secondary">Sort</button>
+        </form>
+    </div>
 
-<h3 class="text-center fw-bold">Our Fleet</h3> 
-<br><br>
+    <!-- Filter Checklist -->
+    <div class="d-flex justify-content-end mb-3">
+        <form id="filterForm" action="{{ route('filterVehicle') }}" method="GET" class="d-flex flex-column flex-md-row align-items-md-center">
+            <div class="filter-options me-md-2 mb-2 mb-md-0">
+                <p>Filter:</p>
+                @foreach($allVehicleTypes as $type)
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="types[]" value="{{ $type }}" id="type-{{ $type }}" 
+                           {{ in_array($type, request()->types ?? []) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="type-{{ $type }}">
+                        {{ $type }}
+                    </label>
+                </div>
+                @endforeach
 
+                @foreach($allTransmissions as $transmission)
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="transmissions[]" value="{{ $transmission }}" id="transmission-{{ $transmission }}" 
+                           {{ in_array($transmission, request()->transmissions ?? []) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="transmission-{{ $transmission }}">
+                        {{ $transmission }}
+                    </label>
+                </div>
+                @endforeach
+            </div>
+            <button type="submit" class="btn btn-secondary">Filter</button>
+        </form>
+    </div>
+
+    <!-- Rental Form -->
+    <div class="container mt-5">
+        <h3 class="text-center">Find Your Rental Car</h3>
+        <form id="rental-form" class="rental-form-container d-flex flex-column flex-md-row justify-content-center" method="get" action="{{route('showAvailableVehicles')}}">
+            <div class="input-group me-md-2 mb-2 mb-md-0">
+                <span class="input-group-text">Collection</span>
+                <input type="datetime-local" name="collection" class="form-control" required>
+            </div>
+            <div class="input-group me-md-2 mb-2 mb-md-0">
+                <span class="input-group-text">Return</span>
+                <input type="datetime-local" name="return" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-secondary">Search</button>
+        </form>
+    </div>
+
+    <br><br>
+
+    <!-- Fleet Section -->
+    <h3 class="text-center fw-bold">Our Fleet</h3>
+    <br><br>
 
     <div class="row">
         @foreach($vehicles as $vehicle)
-            <div class="col-md-4 mb-4"> <!-- Adjust the width for responsiveness -->
+            <div class="col-sm-6 col-md-4 mb-4"> <!-- Responsive columns -->
                 <div class="card shadow">
-                    <img src="{{ asset('public/vehicles/'.$vehicle->image) }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ $vehicle->vehicle_name }}"> 
+                    <img src="{{ asset('public/vehicles/'.$vehicle->image) }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ $vehicle->vehicle_name }}">
                     <div class="card-body">
-                        <h5 class="card-title fw-bold">{{ ucfirst($vehicle->vehicle_name) }}</h5> 
-                        <p class="card-text">SCR {{  number_format($vehicle->daily_rate, 2) }}/day</p> 
-                        <p class="card-text mb-1"><small>{{ ucfirst($vehicle->make_model) }}</small></p> 
-                        <p class="card-text mb-1"><small>{{ ucfirst($vehicle->type) }}</small></p> 
-                        <p class="card-text mb-1"><small>{{ ucfirst($vehicle->transmission) }}</small></p> 
+                        <h5 class="card-title fw-bold">{{ ucfirst($vehicle->vehicle_name) }}</h5>
+                        <p class="card-text">SCR {{ number_format($vehicle->daily_rate, 2) }}/day</p>
+                        <p class="card-text mb-1"><small>{{ ucfirst($vehicle->make_model) }}</small></p>
+                        <p class="card-text mb-1"><small>{{ ucfirst($vehicle->type) }}</small></p>
+                        <p class="card-text mb-1"><small>{{ ucfirst($vehicle->transmission) }}</small></p>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
 </div>
+
 @endsection

@@ -205,14 +205,48 @@ class MainWebsiteController extends Controller
     }
 
 
-    public function addOns(Request $req)
-{
-    // Retrieve the session data
-    $vehicle_id = session('vehicle_id');
-    $pick_up_date = session('pick_up_date');
-    $return_date = session('return_date');
+    public function addOns(Request $request)
+    {
 
-    // Pass the session data to the view
+        
+
+         // Store additional driver details if 'additional_driver' is selected
+        $additional_driver = in_array('additional_driver', $request->add_ons ?? []);
+
+        
+        if ($additional_driver) {
+
+            if($request->driver_name==null || $request->license_number ==null || $request->issuing_country==null){
+
+               
+                return redirect()->back()
+                ->withErrors(['error' => 'Driver name, License Number, and Issuing Country must be entered if additional driver is selected'])
+                ->withInput(); // Send old input back to the view
+               
+            
+            } else{
+
+                $additional_driver_name = $request->driver_name;
+                $additional_license_number = $request->license_number;
+                $additional_issuing_country = $request->issuing_country;
+                
+            }
+
+        }
+
+   
+    // Check if 'child_seat' is selected
+    $child_seat = in_array('child_seat', $request->add_ons ?? []) ? 'Yes' : 'No';
+    
+
+    
+    $vehicle_id = $request->vehicle_id;
+    $pick_up_date = $request->collection;
+    $return_date = $request->return;
+
+    dd($child_seat, $additional_driver_name, $additional_license_number,$additional_issuing_country, $vehicle_id, $pick_up_date, $return_date );
+
+
    
 }
 

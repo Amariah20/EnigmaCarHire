@@ -67,11 +67,11 @@
         <form id="rental-form" class="rental-form-container d-flex flex-column flex-md-row justify-content-center" method="get" action="{{route('showAvailableVehicles')}}">
             <div class="input-group me-md-2 mb-2 mb-md-0">
                 <span class="input-group-text">Collection</span>
-                <input type="datetime-local" name="collection" class="form-control" required>
+                <input type="datetime-local" name="pick_up_date" class="form-control" required>
             </div>
             <div class="input-group me-md-2 mb-2 mb-md-0">
                 <span class="input-group-text">Return</span>
-                <input type="datetime-local" name="return" class="form-control" required>
+                <input type="datetime-local" name="return_date" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-secondary">Search</button>
         </form>

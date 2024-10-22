@@ -27,12 +27,12 @@
                    
                     <div class="mb-3">
                         <label class="form-label">Collection Date & Time</label>
-                        <input type="datetime-local" name="collection" class="form-control" required>
+                        <input type="datetime-local" name="pick_up_date" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Return Date & Time</label>
-                        <input type="datetime-local" name="return" class="form-control" required>
+                        <input type="datetime-local" name="return_date" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-secondary w-100">Search</button>
                 </form>

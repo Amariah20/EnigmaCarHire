@@ -104,8 +104,8 @@ class MainWebsiteController extends Controller
     public function showAvailableVehicles(Request $req){
 
         $today = Carbon::now(); // Get today's date
-        $pick_up_date = Carbon::parse($req->collection);
-        $return_date = Carbon::parse($req->return);
+        $pick_up_date = Carbon::parse($req->pick_up_date);
+        $return_date = Carbon::parse($req->return_date);
 
 
 
@@ -140,7 +140,7 @@ class MainWebsiteController extends Controller
 
 
 
-                $pick_up_date_check = Carbon::parse($req->collection)->subDay();
+                $pick_up_date_check = Carbon::parse($req->pick_up_date)->subDay();
 
 
                 // Check for maintenance schedules
@@ -183,19 +183,21 @@ class MainWebsiteController extends Controller
     // Store booking details in session to continue after login
     session([
         'vehicle_id' => $request->vehicle_id,
-        'pick_up_date' => $request->collection,
-        'return_date' => $request->return,
+        'pick_up_date' => $request->pick_up_date,
+        'return_date' => $request->return_date,
         
     ]);
 
 
     $vehicle_id = $request->vehicle_id;
-    $pick_up_date  =  $request->collection;
-    $return_date = $request->return;
+    $pick_up_date  =  $request->pick_up_date;
+    $return_date = $request->return_date;
 
 
 
     // If user is logged in, proceed to the next step 
+
+    
    
     return view('website.addOns', compact('vehicle_id', 'pick_up_date', 'return_date'));
 
@@ -207,6 +209,8 @@ class MainWebsiteController extends Controller
 
     public function payment(Request $request)
     {
+
+        
 
         
 
@@ -255,13 +259,58 @@ class MainWebsiteController extends Controller
 
     
     $vehicle_id = $request->vehicle_id;
-    $pick_up_date = $request->collection;
-    $return_date = $request->return;
+    $pick_up_date = $request->pick_up_date;
+    $return_date = $request->return_date;
 
     return view ('website.payment', compact('additional_driver_name', 'additional_license_number', 'additional_issuing_country', 'child_seat', 'vehicle_id', 'pick_up_date', 'return_date'));
 
+}
 
-   
+
+public function confirm(Request $req){
+
+        // Validate that the checkbox for accepting terms is checked
+        if (!$req->has('accept_terms')) {
+            return redirect()->back()
+                ->withErrors(['error' => 'You must accept the rental terms and conditions.'])
+                ->withInput(); // This keeps the previous input in the form
+        }
+
+        
+        // Validate that a payment type is selected
+        if (!$req->has('payment_type')) {
+            return redirect()->back()
+                ->withErrors(['error' => 'You must choose a payment type.'])
+                ->withInput();
+        }
+
+        $vehicle_id = $req->vehicle_id;
+        $pick_up_date = $req->pick_up_date;
+        $return_date = $req->return_date;
+        $payment_type= $req->payment_type;
+        $additional_driver_name = $req->additional_driver_name;
+        $additional_license_number = $req->additional_license_number;
+        $additional_issuing_country = $req->additional_issuing_country;
+        $child_seat = $req-> child_seat;
+
+        
+
+        $user =    Auth::guard('customers')->user();
+        
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+
 }
 
 

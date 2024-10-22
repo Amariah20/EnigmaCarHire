@@ -70,4 +70,5 @@ Route::get('/sortVehiclePrice', [MainWebsiteController::class, 'sortVehiclePrice
 Route::get('/filterVehicle', [MainWebsiteController::class, 'filterVehicle'])->name('filterVehicle');
 Route::get('/showAvailableVehicles', [MainWebsiteController::class, 'showAvailableVehicles'])->name('showAvailableVehicles');
 Route::match(['get', 'post'],'/addOns', [MainWebsiteController::class, 'addOns'])->name('addOns');
-Route::post('/payment', [MainWebsiteController::class, 'payment'])->name('payment');
+Route::match(['get','post'], '/payment', [MainWebsiteController::class, 'payment'])->name('payment');
+Route::post('/confirm', [MainWebsiteController::class, 'confirm'])->name('confirm');

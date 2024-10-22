@@ -21,6 +21,23 @@
 <h3 class="text-center fw-bold">Available Vehicles</h3>
 <br><br>
 
+<!-- Sorting Dropdown -->
+<div class="d-flex justify-content-end mb-3">
+        <form id="sortForm" action="{{ route('sortAvailableVehiclePrice') }}" method="GET" class="d-flex flex-column flex-md-row align-items-md-center">
+            <select name="sort" id="sortDropdown" class="form-select me-md-2 mb-2 mb-md-0">
+                <option value="">Sort</option>
+                <option value="price-ascending">Price (Ascending)</option>
+                <option value="price-descending">Price (Descending)</option>
+            </select>
+
+            <input type="hidden" name="pick_up_date" value="{{ old('pick_up_date', $pick_up_date) }}">
+            <input type="hidden" name="return_date" value="{{ old('return_date', $return_date) }}">
+            
+
+
+            <button type="submit" class="btn btn-secondary">Sort</button>
+        </form>
+    </div>
 
    <!-- Filter Checklist -->
 <div class="d-flex justify-content-end mb-3">

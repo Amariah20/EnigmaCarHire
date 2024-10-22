@@ -81,6 +81,7 @@ Route::get('/ourFleet', [MainWebsiteController::class, 'ourFleet'])->name('ourFl
 Route::get('/sortVehiclePrice', [MainWebsiteController::class, 'sortVehiclePrice'])->name('sortVehiclePrice');
 Route::get('/filterVehicle', [MainWebsiteController::class, 'filterVehicle'])->name('filterVehicle');
 Route::get('/filterAvailableVehicle', [MainWebsiteController::class, 'filterAvailableVehicle'])->name('filterAvailableVehicle');
+Route::get('/sortAvailableVehiclePrice', [MainWebsiteController::class, 'sortAvailableVehiclePrice'])->name('sortAvailableVehiclePrice');
 Route::get('/showAvailableVehicles', [MainWebsiteController::class, 'showAvailableVehicles'])->name('showAvailableVehicles');
 Route::match(['get', 'post'],'/addOns', [MainWebsiteController::class, 'addOns'])->name('addOns');
 Route::match(['get','post'], '/payment', [MainWebsiteController::class, 'payment'])->name('payment');

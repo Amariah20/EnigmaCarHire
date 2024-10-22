@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use App\Models\Maintenance;
 use App\Models\Payment;
 use App\Models\AdditionalDriver;
+use App\Models\RentalTerm;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -264,7 +265,9 @@ class MainWebsiteController extends Controller
     $pick_up_date = $request->pick_up_date;
     $return_date = $request->return_date;
 
-    return view ('website.payment', compact('additional_driver_name', 'additional_license_number', 'additional_issuing_country', 'child_seat', 'vehicle_id', 'pick_up_date', 'return_date'));
+    $terms = RentalTerm::all();
+
+    return view ('website.payment', compact('additional_driver_name', 'additional_license_number', 'additional_issuing_country', 'child_seat', 'vehicle_id', 'pick_up_date', 'return_date', 'terms'));
 
 }
 

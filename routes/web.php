@@ -61,6 +61,18 @@ Route::get('/customers', [AdminController::class, 'showCustomers'])->name('custo
 Route::get('/additionalDrivers', [AdminController::class, 'showadditionalDrivers'])->name('additionalDrivers');
 
 
+
+Route::get('/rental_terms', [AdminController::class, 'showTerms'])->name('rental_terms');
+Route::get('/addRentalTerm', [AdminController::class, 'addRentalTerm'])->name('addRentalTerm');
+Route::post('/storeRentalTerm', [AdminController::class, 'storeRentalTerm'])->name('storeRentalTerm');
+Route::get('/deleteRentalTerm/{rental_terms_id}', [AdminController::class, 'deleteRentalTerm'])->name('deleteRentalTerm');
+Route::get('/editRentalTerm/{rental_terms_id}', [AdminController::class, 'editRentalTerm'])->name('editRentalTerm');
+Route::post('/storeEditRentalTerm/{rental_terms_id}', [AdminController::class, 'storeEditRentalTerm'])->name('storeEditRentalTerm');
+
+
+
+
+
 //CUSTOMER-FACING WEBSITE
 Route::get('/homepage', [MainWebsiteController::class, 'homepage'])->name('homepage');
 Route::get('/ourFleet', [MainWebsiteController::class, 'ourFleet'])->name('ourFleet');

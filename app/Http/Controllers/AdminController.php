@@ -10,6 +10,7 @@ use App\Models\Vehicle;
 use App\Models\Insurance;
 use App\Models\Customer;
 use App\Models\AdditionalDriver;
+use App\Models\RentalTerm;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -720,5 +721,61 @@ class AdminController extends Controller
         return view ('admin-panel.additionalDrivers', compact('additionalDrivers'));
     }
 
+
+
+    public function showTerms(){
+
+        $terms = RentalTerm :: all();
+
+        return view ('admin-panel.rentalTerms', compact('terms'));
+    }
+
+    public function addRentalTerm(){
+
+        return view ('admin-panel.addRentalTerm');
+    }
+
+    public function storeRentalTerm(Request $req){
+
+        $rental_term = new RentalTerm();
+        $rental_term->rental_terms = $req->rental_term;
+        $rental_term->save();
+
+        return redirect()->back()->with('success', 'Rental Condition Added Successfully');
+
+
+    }
+
+    public function deleteRentalTerm($rental_terms_id){
+
+        $rental_term = RentalTerm::where('rental_terms_id', $rental_terms_id)->first();
+
+        $rental_term->delete();
+
+        return redirect()->back()->with('success', 'Rental Condition Deleted Successfully');
+
+    }
+
+
+    public function editRentalTerm($rental_terms_id){
+        $rental_term = RentalTerm::where('rental_terms_id', $rental_terms_id)->first();
+      
+        return view ('admin-panel.editRentalTerm', compact('rental_term'));
+    }
+
+    public function storeEditRentalTerm(Request $req, $rental_terms_id){
+
+        $rental_term = RentalTerm::where('rental_terms_id', $rental_terms_id)->first();
+
+
+        $rental_term -> rental_terms = $req->rental_term;
+
+        $rental_term->update();
+
+        return redirect()->back()->with('success', 'Rental Condition Updated Successfully');
+
+
+
+    }
 
 }

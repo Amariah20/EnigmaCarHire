@@ -20,10 +20,10 @@
 
 <div class="container">
     <h3 class="text-center">Rental Terms</h3>
-    <ul>
-        <li>The car will come with a full tank</li>
-        <li>Pick up and drop off at Seychelles International Airport</li>
-        <li>Return the car with a full tank</li>
+    <ul class="list-unstyled">
+        @foreach($terms as $term)
+         <li>{{$term->rental_terms}}</li>
+        @endforeach
     </ul>
 
     <form method="POST" action="{{ route('confirm') }}">
@@ -53,8 +53,6 @@
             </div>
         </div>
 
-    
-
         <!-- Hidden Fields -->
         <input type="hidden" name="vehicle_id" value="{{ old('vehicle_id', $vehicle_id) }}">
         <input type="hidden" name="pick_up_date" value="{{ old('pick_up_date', $pick_up_date) }}">
@@ -65,7 +63,9 @@
         <input type="hidden" name="child_seat" value="{{ old('child_seat', $child_seat) }}">
 
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary">Confirm</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Confirm</button>
+        </div>
     </form>
 </div>
 

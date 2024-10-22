@@ -91,6 +91,8 @@
             <a href="{{route('payments')}}"><i class="bi bi-credit-card-2-back-fill"></i> Payments</a>
             <a href="{{route('maintenances')}}"><i class="bi bi-tools"></i> Maintenance</a>
             <a href="{{route('insurances')}}"><i class="bi bi-shield-shaded"></i>Insurance</a>
+            <a href="{{route('rental_terms')}}"><i class="bi bi-file-earmark-text-fill"></i>Rental Terms</a>
+
 
             <div class="dropdown">
             <a href="#about"> <i class="bi bi-people-fill"></i> Users</a>

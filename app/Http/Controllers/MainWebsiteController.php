@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Models\Reservation;
 use App\Models\Maintenance;
+use App\Models\Payment;
+use App\Models\AdditionalDriver;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -284,30 +286,87 @@ public function confirm(Request $req){
                 ->withInput();
         }
 
-        $vehicle_id = $req->vehicle_id;
-        $pick_up_date = $req->pick_up_date;
-        $return_date = $req->return_date;
+
+        $vehicle_id = $req->vehicle_id;    
+        $pick_up_date = Carbon::createFromFormat('Y-m-d H:i:s', $req->pick_up_date);
+        $return_date = Carbon::createFromFormat('Y-m-d H:i:s', $req->return_date);
         $payment_type= $req->payment_type;
         $additional_driver_name = $req->additional_driver_name;
         $additional_license_number = $req->additional_license_number;
         $additional_issuing_country = $req->additional_issuing_country;
-        $child_seat = $req-> child_seat;
 
+       
         
+        if($req-> child_seat=='Yes'){
+            $child_seat = 1;
+        }else{
+            $child_seat =0;
+        }
 
-        $user =    Auth::guard('customers')->user();
+        $user = Auth::guard('customers')->user();
+
+        $vehicle= Vehicle::where('vehicle_id', $vehicle_id)->first();
+        $rental_days = $pick_up_date->diffInDays($return_date) + 1; // +1 to include the pickup day
+        $total_price = $rental_days * $vehicle->daily_rate;
+
+
+        if($payment_type=="full_payment"){
+            $total_paid= $total_price;
+            $payment_status = "paid";
+
+        } elseif ($payment_type=="deposit"){
+            $total_paid = round($total_price / 2, 2); // Rounds to 2 decimal places
+            $payment_status= "partially-paid";
+        } else{
+            $total_paid= 0;
+            $payment_status = "not-paid"; // Not paid
+
+        }
         
+        //STORE RESERVATION DETAIL
+
+        $reservation = new Reservation();
+        $reservation->pick_up = $pick_up_date;
+        $reservation->return = $return_date;
+        $reservation->total_price = $total_price;
+        $reservation->status ='confirmed';
+        $reservation->vehicle_id = $vehicle_id;
+        $reservation -> customer_id = $user->customer_id;
+        $reservation->child_seat = $child_seat;
+        $reservation->reservation_date = now()->toDateString();
+
+        $reservation->save();
+
+        $reservation_id= $reservation->reservation_id;
+
+        //STORE PAYMENT DETAIL (RESERVATION_ID FOREIGN KEY)
+
+        $payment = new Payment();
+        $payment->total_price =$total_price;
+        $payment->total_paid = $total_paid;
+        $payment->payment_date = now()->toDateString();
+        $payment->status = $payment_status;
+        $payment->reservation_id = $reservation_id;
+
+        $payment->save();
 
 
+        //STORE ADDITIONAL DRIVER DETAIL (RESERVATION_ID FOREIGN KEY)
 
 
+        if ($additional_driver_name !== null && $additional_license_number !== null && $additional_issuing_country !== null) {
+
+            $additional_driver = new AdditionalDriver();
+            $additional_driver->name = $additional_driver_name;
+            $additional_driver->license_number = $additional_license_number;
+            $additional_driver ->issuing_country = $additional_issuing_country;
+            $additional_driver->reservation_id = $reservation_id;
+            
+            $additional_driver->save();
+        }
 
 
-    
-
-
-
-    
+        dd ('SUCCESS');
 
 
 

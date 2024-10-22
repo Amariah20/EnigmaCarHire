@@ -35,9 +35,10 @@
 
                     <form method="POST" action="{{ route('bookVehicle') }}">
                         @csrf
-                        <input type="hidden" name="collection" value="{{ $pick_up_date }}">
-                        <input type="hidden" name="return" value="{{ $return_date }}">
-                        <input type="hidden" name="vehicle_id" value="{{ $vehicle->vehicle_id }}">
+                        <input type="hidden" name="collection" value="{{ old('collection', $pick_up_date) }}">
+                        <input type="hidden" name="return" value="{{ old('return', $return_date) }}">
+                        <input type="hidden" name="vehicle_id" value="{{ old('vehicle_id', $vehicle->vehicle_id) }}">
+
                         <button type="submit" class="btn btn-secondary w-100">Book Now</button> <!-- Full width on small screens -->
                     </form>
                 </div>

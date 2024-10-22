@@ -262,9 +262,9 @@
         </div>
 
         <!-- Hidden Fields -->
-        <input type="hidden" name="collection" value="{{ $pick_up_date }}">
-        <input type="hidden" name="return" value="{{ $return_date }}">
-        <input type="hidden" name="vehicle_id" value="{{ $vehicle_id }}">
+        <input type="hidden" name="vehicle_id" value="{{ old('vehicle_id', $vehicle_id) }}">
+        <input type="hidden" name="collection" value="{{ old('collection', $pick_up_date) }}">
+        <input type="hidden" name="return" value="{{ old('return', $return_date) }}">
         
         <!-- Submit Button -->
         <div class="row">

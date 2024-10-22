@@ -220,7 +220,7 @@ class MainWebsiteController extends Controller
 
                
                 return redirect()->back()
-                ->withErrors(['error' => 'Driver name, License Number, and Issuing Country must be entered if additional driver is selected'])
+                ->withErrors(['error' => 'Driver name, License Number, and Issuing Country are required when adding an additional driver'])
                 ->withInput(); // Send old input back to the view
                
             
@@ -233,6 +233,13 @@ class MainWebsiteController extends Controller
             }
 
         }
+
+        if (!$additional_driver && ($request->driver_name || $request->license_number || $request->issuing_country)) {
+            return redirect()->back()
+                ->withErrors(['error' => 'Please tick the "Additional Driver" box if you wish to enter driver details.'])
+                ->withInput();
+        }
+    
 
    
     // Check if 'child_seat' is selected

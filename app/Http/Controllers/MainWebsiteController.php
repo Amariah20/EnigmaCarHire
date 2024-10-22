@@ -166,7 +166,7 @@ class MainWebsiteController extends Controller
     }
 
 
-    public function bookVehicle(Request $request)
+    public function addOns(Request $request)
     {   
 
         
@@ -205,7 +205,7 @@ class MainWebsiteController extends Controller
     }
 
 
-    public function addOns(Request $request)
+    public function payment(Request $request)
     {
 
         
@@ -232,6 +232,13 @@ class MainWebsiteController extends Controller
                 
             }
 
+        }else{
+
+            $additional_driver_name = null;
+            $additional_license_number = null;
+            $additional_issuing_country = null;
+
+
         }
 
         if (!$additional_driver && ($request->driver_name || $request->license_number || $request->issuing_country)) {
@@ -243,7 +250,7 @@ class MainWebsiteController extends Controller
 
    
     // Check if 'child_seat' is selected
-    $child_seat = in_array('child_seat', $request->add_ons ?? []) ? 'Yes' : 'No';
+    $child_seat = in_array('child_seat', $request->add_ons ?? []) ? 'Yes' : 'No'; //Might change when childseat info is updated in admin panel?? 
     
 
     
@@ -251,7 +258,7 @@ class MainWebsiteController extends Controller
     $pick_up_date = $request->collection;
     $return_date = $request->return;
 
-    dd($child_seat, $additional_driver_name, $additional_license_number,$additional_issuing_country, $vehicle_id, $pick_up_date, $return_date );
+    return view ('website.payment', compact('additional_driver_name', 'additional_license_number', 'additional_issuing_country', 'child_seat', 'vehicle_id', 'pick_up_date', 'return_date'));
 
 
    

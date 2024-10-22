@@ -21,7 +21,7 @@
 <h3 class="text-center">Add Ons</h3>
 
 <!-- Add Ons form -->
-<form method="POST" action="{{ route('addOns') }}">
+<form method="POST" action="{{ route('payment') }}">
     @csrf
     
     <div class="container">

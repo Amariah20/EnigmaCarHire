@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\FilterSortController;
 use App\Http\Controllers\MainWebsiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -78,10 +79,12 @@ Route::get('/homepage', [MainWebsiteController::class, 'homepage'])->name('homep
 Route::get('/ourFleet', [MainWebsiteController::class, 'ourFleet'])->name('ourFleet');
 
 
-Route::get('/sortVehiclePrice', [MainWebsiteController::class, 'sortVehiclePrice'])->name('sortVehiclePrice');
-Route::get('/filterVehicle', [MainWebsiteController::class, 'filterVehicle'])->name('filterVehicle');
-Route::get('/filterAvailableVehicle', [MainWebsiteController::class, 'filterAvailableVehicle'])->name('filterAvailableVehicle');
-Route::get('/sortAvailableVehiclePrice', [MainWebsiteController::class, 'sortAvailableVehiclePrice'])->name('sortAvailableVehiclePrice');
+Route::get('/sortFilterAvailableVehicles', [FilterSortController::class, 'sortFilterAvailableVehicles'])->name('sortFilterAvailableVehicles');
+Route::get('/sortFilterVehicle', [FilterSortController::class, 'sortAndFilterVehicles'])->name('sortFilterVehicle');
+Route::get('/sortVehiclePrice', [FilterSortController::class, 'sortVehiclePrice'])->name('sortVehiclePrice');
+Route::get('/filterVehicle', [FilterSortController::class, 'filterVehicle'])->name('filterVehicle');
+Route::get('/filterAvailableVehicle', [FilterSortController::class, 'filterAvailableVehicle'])->name('filterAvailableVehicle');
+Route::get('/sortAvailableVehiclePrice', [FilterSortController::class, 'sortAvailableVehiclePrice'])->name('sortAvailableVehiclePrice');
 Route::get('/showAvailableVehicles', [MainWebsiteController::class, 'showAvailableVehicles'])->name('showAvailableVehicles');
 Route::match(['get', 'post'],'/addOns', [MainWebsiteController::class, 'addOns'])->name('addOns');
 Route::match(['get','post'], '/payment', [MainWebsiteController::class, 'payment'])->name('payment');

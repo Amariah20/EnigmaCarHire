@@ -20,24 +20,21 @@
 
 <div class="container mt-5">
 
-    <!-- Sorting Dropdown -->
-    <div class="d-flex justify-content-end mb-3">
-        <form id="sortForm" action="{{ route('sortVehiclePrice') }}" method="GET" class="d-flex flex-column flex-md-row align-items-md-center">
-            <select name="sort" id="sortDropdown" class="form-select me-md-2 mb-2 mb-md-0">
+    <!-- Sorting and Filter Form Combined -->
+    <form id="sortFilterForm" action="{{ route('sortFilterVehicle') }}" method="GET" class="d-flex flex-column align-items-end"> 
+        <!-- Sorting Dropdown (Shorter width) -->
+        <div class="mb-2" style="width: 170px;">
+            <select name="sort" id="sortDropdown" class="form-select form-select-sm">
                 <option value="">Sort</option>
-                <option value="price-ascending">Price (Ascending)</option>
-                <option value="price-descending">Price (Descending)</option>
+                <option value="price-ascending" {{ request('sort') == 'price-ascending' ? 'selected' : '' }}>Price (Ascending)</option>
+                <option value="price-descending" {{ request('sort') == 'price-descending' ? 'selected' : '' }}>Price (Descending)</option>
             </select>
-            <button type="submit" class="btn btn-secondary">Sort</button>
-        </form>
-    </div>
+        </div>
 
-    <!-- Filter Checklist -->
-    <div class="d-flex justify-content-end mb-3">
-        <form id="filterForm" action="{{ route('filterVehicle') }}" method="GET" class="d-flex flex-column flex-md-row align-items-md-center">
-            <div class="filter-options me-md-2 mb-2 mb-md-0">
-                <p>Filter:</p>
-                @foreach($allVehicleTypes as $type)
+        <!-- Filter Options -->
+        <div class="filter-options mb-2 text-end" style="max-width: 300px;">
+            <p class="mb-1">Filter:</p>
+            @foreach($allVehicleTypes as $type)
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="types[]" value="{{ $type }}" id="type-{{ $type }}" 
                            {{ in_array($type, request()->types ?? []) ? 'checked' : '' }}>
@@ -45,9 +42,9 @@
                         {{ $type }}
                     </label>
                 </div>
-                @endforeach
+            @endforeach
 
-                @foreach($allTransmissions as $transmission)
+            @foreach($allTransmissions as $transmission)
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="transmissions[]" value="{{ $transmission }}" id="transmission-{{ $transmission }}" 
                            {{ in_array($transmission, request()->transmissions ?? []) ? 'checked' : '' }}>
@@ -55,11 +52,12 @@
                         {{ $transmission }}
                     </label>
                 </div>
-                @endforeach
-            </div>
-            <button type="submit" class="btn btn-secondary">Filter</button>
-        </form>
-    </div>
+            @endforeach
+        </div>
+
+        <!-- Apply Button -->
+        <button type="submit" class="btn btn-secondary btn-sm">Apply</button>
+    </form>
 
     <!-- Rental Form -->
     <div class="container mt-5">

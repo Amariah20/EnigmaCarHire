@@ -49,176 +49,7 @@ class MainWebsiteController extends Controller
         return view ('website.ourFleet', compact('vehicles', 'allVehicleTypes', 'allTransmissions'));
     }
 
-    public function sortVehiclePrice(Request $req)
-    {
-        // Default query to retrieve all vehicles
-        $vehicles = Vehicle::query();
-        $allVehicleTypes = Vehicle::pluck('type')->unique();
-        $allTransmissions = Vehicle::pluck('transmission')->unique();
     
-        // Handle sorting based on the 'sort' request value
-        if ($req->get('sort') == 'price-ascending') {
-            // Sort vehicles by price in ascending order
-            $vehicles = $vehicles->orderBy('daily_rate', 'asc')->get();
-        } elseif ($req->get('sort') == 'price-descending') {
-            // Sort vehicles by price in descending order
-            $vehicles = $vehicles->orderBy('daily_rate', 'desc')->get();
-        } else {
-            // Get all vehicles if no sorting is selected
-            $vehicles = $vehicles->get();
-        }
-    
-        // Return the view with the sorted vehicles
-        return view('website.ourFleet', compact('vehicles', 'allVehicleTypes', 'allTransmissions'));
-    }
-   
-    public function filterVehicle(Request $request)
-    {
-        // Get all unique vehicle types and transmissions
-        $allVehicleTypes = Vehicle::pluck('type')->unique();
-        $allTransmissions = Vehicle::pluck('transmission')->unique();
-    
-        // Get the selected vehicle types and transmissions from the request
-        $selectedTypes = $request->input('types', []);
-    
-        // Start with a query for all vehicles
-        $vehiclesQuery = Vehicle::query();
-    
-        // Apply type and transmission filters if selected
-        if (!empty($selectedTypes)) {
-            $vehiclesQuery->whereIn('type', $selectedTypes);
-        }
-    
-        // Get the selected transmissions from the request
-        $selectedTransmissions = $request->input('transmissions', []);
-    
-        if (!empty($selectedTransmissions)) {
-            $vehiclesQuery->whereIn('transmission', $selectedTransmissions);
-        }
-    
-        // Execute the query to get filtered vehicles
-        $vehicles = $vehiclesQuery->get();
-    
-        // Return the view with the filtered vehicles and the full filter lists
-        return view('website.ourFleet', compact('vehicles', 'allVehicleTypes', 'allTransmissions'));
-    }
-
-
-    public function filterAvailableVehicle(Request $request)
-{
-    $pick_up_date = Carbon::parse($request->pick_up_date);
-    $return_date = Carbon::parse($request->return_date);
-
-    // Step 1: Get all vehicle IDs that are reserved during the selected dates
-    $reservedVehicles = Reservation::where(function ($query) use ($pick_up_date, $return_date) {
-        $query->where('return', '>=', $pick_up_date) // Reservation ends after or on pick-up date
-              ->where('pick_up', '<=', $return_date)
-              ->where('status', '!=', 'cancelled'); // Reservation starts before or on return date
-    })->pluck('vehicle_id');
-
-    $pick_up_date_check = Carbon::parse($request->pick_up_date)->subDay();
-
-    // Check for maintenance schedules
-    $maintenanceSchedule = Maintenance::where(function ($query) use ($pick_up_date_check, $return_date) {
-        $query->where('status', '!=', 'completed') // Exclude completed maintenance
-              ->where('status', '!=', 'cancelled') // Exclude cancelled maintenance
-              ->where('due_date', '>=', $pick_up_date_check)
-              ->where('due_date', '<=', $return_date);
-    })->pluck('vehicle_id');
-
-    $excludedVehicles = $reservedVehicles->merge($maintenanceSchedule);
-
-    // Step 3: Start the query with available vehicles
-    $vehiclesQuery = Vehicle::whereNotIn('vehicle_id', $excludedVehicles);
-
-    // Get the selected vehicle types and transmissions from the request
-    $selectedTypes = $request->input('types', []);
-    $selectedTransmissions = $request->input('transmissions', []);
-
-    // Apply type and transmission filters if selected
-    if (!empty($selectedTypes)) {
-        $vehiclesQuery->whereIn('type', $selectedTypes);
-    }
-
-    if (!empty($selectedTransmissions)) {
-        $vehiclesQuery->whereIn('transmission', $selectedTransmissions);
-    }
-
-    // Execute the query to get filtered vehicles
-    $vehicles = $vehiclesQuery->get();
-
-    // **Always retrieve all unique vehicle types and transmissions**
-    $allVehicleTypes = Vehicle::pluck('type')->unique();
-    $allTransmissions = Vehicle::pluck('transmission')->unique();
-
-    // Return the view with the filtered vehicles and the full filter lists
-    return view('website.availableVehicles', compact('vehicles', 'pick_up_date', 'return_date', 'allVehicleTypes', 'allTransmissions', 'selectedTypes', 'selectedTransmissions'));
-}
-
-
-public function sortAvailableVehiclePrice(Request $req)
-    {
-
-        $pick_up_date = Carbon::parse($req->pick_up_date);
-        $return_date = Carbon::parse($req->return_date);
-
-
-        $pick_up_date = Carbon::parse($req->pick_up_date);
-    $return_date = Carbon::parse($req->return_date);
-
-    // Step 1: Get all vehicle IDs that are reserved during the selected dates
-    $reservedVehicles = Reservation::where(function ($query) use ($pick_up_date, $return_date) {
-        $query->where('return', '>=', $pick_up_date) // Reservation ends after or on pick-up date
-              ->where('pick_up', '<=', $return_date)
-              ->where('status', '!=', 'cancelled'); // Reservation starts before or on return date
-    })->pluck('vehicle_id');
-
-    $pick_up_date_check = Carbon::parse($req->pick_up_date)->subDay();
-
-    // Check for maintenance schedules
-    $maintenanceSchedule = Maintenance::where(function ($query) use ($pick_up_date_check, $return_date) {
-        $query->where('status', '!=', 'completed') // Exclude completed maintenance
-              ->where('status', '!=', 'cancelled') // Exclude cancelled maintenance
-              ->where('due_date', '>=', $pick_up_date_check)
-              ->where('due_date', '<=', $return_date);
-    })->pluck('vehicle_id');
-
-    $excludedVehicles = $reservedVehicles->merge($maintenanceSchedule);
-
-    // Step 3: Start the query with available vehicles
-    $vehicles = Vehicle::whereNotIn('vehicle_id', $excludedVehicles);
-
-     // Step 4: Apply filtering based on selected types
-     
-    
-
-
-       
-    
-        // Handle sorting based on the 'sort' request value
-        if ($req->get('sort') == 'price-ascending') {
-            // Sort vehicles by price in ascending order
-            $vehicles = $vehicles->orderBy('daily_rate', 'asc')->get();
-        } elseif ($req->get('sort') == 'price-descending') {
-            // Sort vehicles by price in descending order
-            $vehicles = $vehicles->orderBy('daily_rate', 'desc')->get();
-        } else {
-            // Get all vehicles if no sorting is selected
-            $vehicles = $vehicles->get();
-        }
-
-
-         // Default query to retrieve all vehicles
-         $allVehicleTypes = Vehicle::pluck('type')->unique();
-         $allTransmissions = Vehicle::pluck('transmission')->unique();
-    
-        // Return the view with the sorted vehicles
-        return view('website.availableVehicles', compact('vehicles', 'pick_up_date', 'return_date', 'allVehicleTypes', 'allTransmissions', ));
-    }
-   
-
-
-
     
 
     
@@ -256,12 +87,6 @@ public function sortAvailableVehiclePrice(Request $req)
                 })->pluck('vehicle_id'); // Get the list of reserved vehicle IDs
 
 
-
-
-
-
-
-
                 $pick_up_date_check = Carbon::parse($req->pick_up_date)->subDay();
 
 
@@ -292,6 +117,10 @@ public function sortAvailableVehiclePrice(Request $req)
           
     
     }
+
+
+
+    
 
 
     public function addOns(Request $request)

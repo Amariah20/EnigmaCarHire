@@ -1,9 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Booking Confirmation</title>
 </head>
 <body>
-    <h2>{{ $data['title'] }}</h2>
-    <p>{{ $data['content'] }}</p>
+    <h1>Booking Confirmation</h1>
+    <p>Dear {{ $reservation->customer->name }},</p>
+
+    <p>Your reservation has been confirmed!</p>
+    <h3>Reservation Details:</h3>
+    <p>Pickup Date: {{ $reservation->pick_up }}</p>
+    <p>Return Date: {{ $reservation->return }}</p>
+    <p>Total Price: {{ $reservation->total_price }}</p>
+
+    <h3>Payment Details:</h3>
+    <p>Total Paid: {{ $payment->total_paid }}</p>
+    <p>Payment Status: {{ $payment->status }}</p>
+
+    @if($additionalDriver)
+        <h3>Additional Driver Details:</h3>
+        <p>Name: {{ $additionalDriver->name }}</p>
+        <p>License Number: {{ $additionalDriver->license_number }}</p>
+        <p>Issuing Country: {{ $additionalDriver->issuing_country }}</p>
+    @endif
+
+    <p>Thank you for choosing us!</p>
 </body>
 </html>

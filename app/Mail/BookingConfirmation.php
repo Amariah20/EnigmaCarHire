@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Reservation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,20 +14,31 @@ class BookingConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
+    public $reservation;
+    public $payment;
+    public $additionalDriver;
 
 
     /**
      * Create a new message instance.
      */
-    public function __construct($data)
+    public function __construct(Reservation $reservation)
     {
-        $this->data = $data;
+
+        $this->reservation = $reservation;
+        $this->payment = $reservation->payment; 
+        $this->additionalDriver = $reservation->additionalDriver; 
 
     }
 
     public function build(){
-       return $this->subject('Reservation Confirmation')->view('emails.bookingConfirmationEmail');
+        return $this->subject('Reservation Confirmation')
+                    ->view('emails.bookingConfirmationEmail')
+                    ->with([
+                        'reservation' => $this->reservation,
+                        'payment' => $this->payment,
+                        'additionalDriver' => $this->additionalDriver,
+                    ]);
 
 
     }

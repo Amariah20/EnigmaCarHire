@@ -323,7 +323,12 @@ public function confirm(Request $req){
         }
 
 
-        return redirect('/homepage')->with('success', 'Reservation created successfully!');
+
+        //return redirect('/homepage')->with('success', 'Reservation created successfully!');
+
+            // Pass the reservation details to the bookingConfirmation route
+         return redirect()->route('bookingConfirmation', ['reservation_id' => $reservation_id]);
+
 
 
 }

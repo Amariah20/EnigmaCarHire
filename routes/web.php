@@ -94,7 +94,7 @@ Route::match(['get','post'], '/payment', [MainWebsiteController::class, 'payment
 Route::post('/confirm', [MainWebsiteController::class, 'confirm'])->name('confirm');
 
 
-Route::get('/bookingConfirmation', [MailController::class, 'bookingConfirmation'])->name('bookingConfirmation');
+Route::get('/bookingConfirmation/{reservation_id}', [MailController::class, 'bookingConfirmation'])->name('bookingConfirmation');
 
 /*
 Route::get('send-mail', function () {

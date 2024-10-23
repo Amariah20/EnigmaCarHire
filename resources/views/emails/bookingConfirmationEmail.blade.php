@@ -9,9 +9,11 @@
 
     <p>Your reservation has been confirmed!</p>
     <h3>Reservation Details:</h3>
+    <p>Vehicle: {{$vehicle->vehicle_name}}</p>
     <p>Pickup Date: {{ $reservation->pick_up }}</p>
     <p>Return Date: {{ $reservation->return }}</p>
     <p>Total Price: {{ $reservation->total_price }}</p>
+
 
     <h3>Payment Details:</h3>
     <p>Total Paid: {{ $payment->total_paid }}</p>
@@ -25,7 +27,6 @@
     @endif
 
     <p>Thank you for choosing us!</p>
-
     <p>Please do not reply to this email. If you have any queries please message us at: enigmaticrides@seychellescar.com </p>
 </body>
 </html>

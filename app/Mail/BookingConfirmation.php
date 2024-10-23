@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\RentalTerm;
 use App\Models\Reservation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,6 +18,7 @@ class BookingConfirmation extends Mailable
     public $reservation;
     public $payment;
     public $additionalDriver;
+    public $vehicle;
 
 
     /**
@@ -28,6 +30,7 @@ class BookingConfirmation extends Mailable
         $this->reservation = $reservation;
         $this->payment = $reservation->payment; 
         $this->additionalDriver = $reservation->additionalDriver; 
+        $this->vehicle = $reservation->vehicle;
 
     }
 
@@ -38,6 +41,7 @@ class BookingConfirmation extends Mailable
                         'reservation' => $this->reservation,
                         'payment' => $this->payment,
                         'additionalDriver' => $this->additionalDriver,
+                        'vehicle'=>$this->vehicle,
                     ]);
 
 

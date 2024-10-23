@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\BookingConfirmation;
 use App\Models\Reservation;
+use App\Models\RentalTerm;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,8 @@ class MailController extends Controller
 
 
         
-        $reservation = Reservation::with(['payment', 'additionalDriver'])->find($reservation_id);
+        $reservation = Reservation::with(['payment', 'additionalDriver', 'vehicle'])->find($reservation_id);
+
         
         Mail::to($reservation->customer->email)->send(new BookingConfirmation($reservation));
 

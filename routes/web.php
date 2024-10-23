@@ -5,7 +5,10 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FilterSortController;
 use App\Http\Controllers\MainWebsiteController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -89,3 +92,19 @@ Route::get('/showAvailableVehicles', [MainWebsiteController::class, 'showAvailab
 Route::match(['get', 'post'],'/addOns', [MainWebsiteController::class, 'addOns'])->name('addOns');
 Route::match(['get','post'], '/payment', [MainWebsiteController::class, 'payment'])->name('payment');
 Route::post('/confirm', [MainWebsiteController::class, 'confirm'])->name('confirm');
+
+
+Route::get('/bookingConfirmation', [MailController::class, 'bookingConfirmation'])->name('bookingConfirmation');
+
+/*
+Route::get('send-mail', function () {
+    $details = [
+        'title' => 'Success',
+        'content' => 'This is an email testing using Laravel-Brevo',
+    ];
+   
+    Mail::to('enigmainvestment@outlook.com')->send(new \App\Mail\BookingConfirmation($details));
+   
+    return 'Email sent at ' . now();
+});*/
+

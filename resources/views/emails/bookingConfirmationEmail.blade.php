@@ -25,5 +25,7 @@
     @endif
 
     <p>Thank you for choosing us!</p>
+
+    <p>Please do not reply to this email. If you have any queries please message us at: enigmaticrides@seychellescar.com </p>
 </body>
 </html>

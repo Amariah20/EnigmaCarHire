@@ -37,7 +37,6 @@
             <p><strong>Pick-up Location:</strong> {{$reservation->pick_up}}</p>
             <p><strong>Return Location:</strong> {{$reservation->return}}</p>
             <p><strong>Total Price:</strong> SCR  {{$reservation->total_price}}</p>
-            <p><strong>{{ $reservation->child_seat ? 'Yes' : 'No' }}</strong></p>
             <p><strong>Status:</strong> {{$reservation->status}}</p>
             <a href="{{route('editReservation', ['reservation_id'=>$reservation->reservation_id])}}" class="btn btn-primary mt-3">Edit Reservation Details</a>
         </div>
@@ -87,6 +86,27 @@
             @endif
         </div>
     </div>
+
+       <!-- Extras Details Card -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Selected Extras</h3>
+        </div>
+        <div class="card-body">
+            @if($reservation->extras->isEmpty())
+                <p>No selected extras</p>
+            @else
+                <ul>
+                    @foreach($reservation->extras as $extra)
+                        <li>
+                            <strong>{{ $extra->extra_name }}</strong> - SCR {{ number_format($extra->price, 2) }}
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+        </div>
+    </div>
+
 </div>
 
 @endsection

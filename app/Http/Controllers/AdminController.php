@@ -394,7 +394,7 @@ class AdminController extends Controller
     public function viewReservation($reservation_id) { 
 
         
-        $reservation = Reservation::with('additionalDriver', 'payment')->where('reservation_id', $reservation_id)->first();
+        $reservation = Reservation::with('additionalDriver', 'payment', 'extras')->where('reservation_id', $reservation_id)->first();
 
         //$reservation = Reservation::find($reservation_id);
     

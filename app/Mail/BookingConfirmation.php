@@ -19,7 +19,9 @@ class BookingConfirmation extends Mailable
     public $payment;
     public $additionalDriver;
     public $vehicle;
-
+    public $pickupLocation;
+    public $dropoffLocation;
+    public $extras;
 
     /**
      * Create a new message instance.
@@ -31,6 +33,9 @@ class BookingConfirmation extends Mailable
         $this->payment = $reservation->payment; 
         $this->additionalDriver = $reservation->additionalDriver; 
         $this->vehicle = $reservation->vehicle;
+        $this->pickupLocation = $reservation->pickupLocation; 
+        $this->dropoffLocation = $reservation->dropoffLocation; 
+        $this->extras = $reservation->extras; 
 
     }
 
@@ -42,6 +47,9 @@ class BookingConfirmation extends Mailable
                         'payment' => $this->payment,
                         'additionalDriver' => $this->additionalDriver,
                         'vehicle'=>$this->vehicle,
+                        'pickupLocation'=>$this->pickupLocation,
+                        'dropoffLocation'=>$this->dropoffLocation,
+                        'extras'=>$this->extras,
                     ]);
 
 

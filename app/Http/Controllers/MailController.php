@@ -17,8 +17,8 @@ class MailController extends Controller
     {
 
 
-        
-        $reservation = Reservation::with(['payment', 'additionalDriver', 'vehicle'])->find($reservation_id);
+
+        $reservation = Reservation::with(['payment', 'additionalDriver', 'vehicle', 'pickupLocation', 'dropoffLocation', 'extras'])->find($reservation_id);
 
         
         Mail::to($reservation->customer->email)->send(new BookingConfirmation($reservation));

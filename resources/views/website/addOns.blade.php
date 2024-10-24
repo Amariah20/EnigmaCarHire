@@ -18,7 +18,7 @@
     </div>
 @endif
 
-<h3 class="text-center">Add Ons</h3>
+<h3 class="text-center">Additional Details</h3>
 
 <!-- Add Ons form -->
 <form method="POST" action="{{ route('payment') }}">
@@ -50,6 +50,8 @@
 
 
     <div class="row">
+    <h5>Select Your Adds Ons</h5>
+
         @foreach($extras as $extra)
 
         <div class="col-12 col-md-6 mb-3">

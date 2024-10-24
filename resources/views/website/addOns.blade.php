@@ -24,20 +24,43 @@
 <form method="POST" action="{{ route('payment') }}">
     @csrf
     
+
     <div class="container">
+        <!-- Pick-Up Location -->
+        <div class="mb-4">
+            <h5>Select Your Pick-Up Location</h5>
+            <select name="pick_up_location" class="form-select" required>
+                <option value="" disabled selected>Select a pick-up location</option>
+                @foreach($locations as $location)
+                    <option value="{{ $location->location_id }}">{{ $location->location_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <!-- Drop-Off Location -->
+        <div class="mb-4">
+            <h5>Select Your Drop-Off Location</h5>
+            <select name="drop_off_location" class="form-select" required>
+                <option value="" disabled selected>Select a drop-off location</option>
+                @foreach($locations as $location)
+                    <option value="{{ $location->location_id }}">{{ $location->location_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+
     <div class="row">
+        @foreach($extras as $extra)
 
-    @foreach($extras as $extra)
+        <div class="col-12 col-md-6 mb-3">
+            <div class="form-check">
+                <input type="checkbox" name="extras[]" value="{{$extra->extra_id}}" 
+                class="form-check-input"  {{ (is_array(old('extras')) && in_array($extra->extra_id, old('extras'))) ? 'checked' : '' }}>
+                <label class="form-check-label">{{$extra->extra_name}}, SCR {{number_format($extra->price, 2)}}</label>
+            </div>
+        </div>
 
-    <div class="col-12 col-md-6 mb-3">
-    <div class="form-check">
-        <input type="checkbox" name="extras[]" value="{{$extra->extra_id}}" 
-        class="form-check-input"  {{ (is_array(old('extras')) && in_array($extra->extra_id, old('extras'))) ? 'checked' : '' }}>
-        <label class="form-check-label">{{$extra->extra_name}}, SCR {{number_format($extra->price, 2)}}</label>
-    </div>
-</div>
-
-    @endforeach
+        @endforeach
     </div>
 
     

@@ -64,7 +64,9 @@
         <input type="hidden" name="additional_issuing_country" value="{{ old('additional_issuing_country', $additional_issuing_country) }}">
         <input type="hidden" name="total_price" value="{{ old('total_price', $total_price) }}">
         <input type="hidden" name="selected_extras" value="{{ old('selected_extras', json_encode($selected_extras)) }}">
-        
+        <input type="hidden" name="pick_up_location" value="{{ old('pick_up_location', $pick_up_location) }}">
+        <input type="hidden" name="drop_off_location" value="{{ old('drop_off_location', $drop_off_location) }}">
+
 
 
 

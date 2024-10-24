@@ -10,6 +10,7 @@ use App\Models\Payment;
 use App\Models\AdditionalDriver;
 use App\Models\RentalTerm;
 use App\Models\Extra;
+use App\Models\Location;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -129,37 +130,39 @@ class MainWebsiteController extends Controller
 
         
         // Check if user is logged in
-    if(!Auth::guard('customers')->check()){
+        if(!Auth::guard('customers')->check()){
 
-        session(['url.intended' => url()->previous()]);
+            session(['url.intended' => url()->previous()]);
 
 
-        // If not logged in, redirect to login, and Laravel will handle showing the login form
-        return redirect()->route('login');
-    }
+            // If not logged in, redirect to login, and Laravel will handle showing the login form
+            return redirect()->route('login');
+        }
 
-    // Store booking details in session to continue after login
-    session([
-        'vehicle_id' => $request->vehicle_id,
-        'pick_up_date' => $request->pick_up_date,
-        'return_date' => $request->return_date,
+        // Store booking details in session to continue after login
+        session([
+            'vehicle_id' => $request->vehicle_id,
+            'pick_up_date' => $request->pick_up_date,
+            'return_date' => $request->return_date,
+            
+        ]);
+
+
+        $vehicle_id = $request->vehicle_id;
+        $pick_up_date  =  $request->pick_up_date;
+        $return_date = $request->return_date;
+
+
+
+        // If user is logged in, proceed to the next step 
+
+        $extras = Extra::all();
+        $locations = Location::all();
+
+
         
-    ]);
-
-
-    $vehicle_id = $request->vehicle_id;
-    $pick_up_date  =  $request->pick_up_date;
-    $return_date = $request->return_date;
-
-
-
-    // If user is logged in, proceed to the next step 
-
-    $extras = Extra::all();
-
     
-   
-    return view('website.addOns', compact('vehicle_id', 'pick_up_date', 'return_date', 'extras'));
+        return view('website.addOns', compact('vehicle_id', 'pick_up_date', 'return_date', 'extras', 'locations'));
 
     
 
@@ -236,10 +239,13 @@ class MainWebsiteController extends Controller
     $vehicle_id = $request->vehicle_id;
     $pick_up_date = $request->pick_up_date;
     $return_date = $request->return_date;
+    $pick_up_location = $request->pick_up_location;
+    $drop_off_location =$request->drop_off_location;
+
 
     $terms = RentalTerm::all();
 
-    return view ('website.payment', compact('additional_driver_name', 'additional_license_number', 'additional_issuing_country',  'vehicle_id', 'pick_up_date', 'return_date', 'terms', 'selected_extras', 'total_price'));
+    return view ('website.payment', compact('additional_driver_name', 'additional_license_number', 'additional_issuing_country',  'vehicle_id', 'pick_up_date', 'return_date', 'terms', 'selected_extras', 'total_price', 'pick_up_location', 'drop_off_location'));
 
 }
 
@@ -296,6 +302,7 @@ public function confirm(Request $req){
         
         //STORE RESERVATION DETAIL
 
+
         $reservation = new Reservation();
         $reservation->pick_up = $pick_up_date;
         $reservation->return = $return_date;
@@ -304,6 +311,9 @@ public function confirm(Request $req){
         $reservation->vehicle_id = $vehicle_id;
         $reservation -> customer_id = $user->customer_id;
         $reservation->reservation_date = now()->toDateString();
+        $reservation->pickup_location_id = $req->pick_up_location;
+        $reservation->dropoff_location_id = $req->drop_off_location;
+
 
         $reservation->save();
 

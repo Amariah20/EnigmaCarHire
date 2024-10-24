@@ -35,6 +35,8 @@
         </div>
 
         <h3 class="text-center">Payment</h3>
+
+        <h4>Total Price: {{$total_price}}</h4>
         <p>Choose Payment Type:</p>
 
         <!-- Radio buttons for payment types -->
@@ -60,7 +62,11 @@
         <input type="hidden" name="additional_driver_name" value="{{ old('additional_driver_name', $additional_driver_name) }}">
         <input type="hidden" name="additional_license_number" value="{{ old('additional_license_number', $additional_license_number) }}">
         <input type="hidden" name="additional_issuing_country" value="{{ old('additional_issuing_country', $additional_issuing_country) }}">
-        <input type="hidden" name="child_seat" value="{{ old('child_seat', $child_seat) }}">
+        <input type="hidden" name="total_price" value="{{ old('total_price', $total_price) }}">
+        <input type="hidden" name="selected_extras" value="{{ old('selected_extras', json_encode($selected_extras)) }}">
+        
+
+
 
         <!-- Submit Button -->
         <div class="text-center">

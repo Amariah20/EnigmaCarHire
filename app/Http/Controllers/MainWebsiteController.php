@@ -9,6 +9,7 @@ use App\Models\Maintenance;
 use App\Models\Payment;
 use App\Models\AdditionalDriver;
 use App\Models\RentalTerm;
+use App\Models\Extra;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -154,9 +155,11 @@ class MainWebsiteController extends Controller
 
     // If user is logged in, proceed to the next step 
 
+    $extras = Extra::all();
+
     
    
-    return view('website.addOns', compact('vehicle_id', 'pick_up_date', 'return_date'));
+    return view('website.addOns', compact('vehicle_id', 'pick_up_date', 'return_date', 'extras'));
 
     
 
@@ -168,11 +171,30 @@ class MainWebsiteController extends Controller
     {
 
         
+        $selected_extras = $request->extras ?? [];
+        $total_extras_price = 0;
+        foreach ($selected_extras as $extra_id) {
+            $extra = Extra::find($extra_id); 
+            if ($extra) {
+                $total_extras_price += $extra->price; 
+            }
+        }
 
+
+        $pick_up_date = Carbon::createFromFormat('Y-m-d H:i:s', $request->pick_up_date);
+        $return_date = Carbon::createFromFormat('Y-m-d H:i:s', $request->return_date);
+
+        $vehicle= Vehicle::where('vehicle_id', $request->vehicle_id)->first();
+        $rental_days = $pick_up_date->diffInDays($return_date) + 1; // +1 to include the pickup day
+        $total_price = $rental_days * $vehicle->daily_rate;
         
 
-         // Store additional driver details if 'additional_driver' is selected
-        $additional_driver = in_array('additional_driver', $request->add_ons ?? []);
+        $total_price += $total_extras_price;
+
+
+         // Store additional driver details if 'additional_driver' is selected. ID of additional driver is 6. 
+        $additional_driver = in_array('6', $selected_extras); 
+
 
         
         if ($additional_driver) {
@@ -210,10 +232,6 @@ class MainWebsiteController extends Controller
     
 
    
-    // Check if 'child_seat' is selected
-    $child_seat = in_array('child_seat', $request->add_ons ?? []) ? 'Yes' : 'No'; //Might change when childseat info is updated in admin panel?? 
-    
-
     
     $vehicle_id = $request->vehicle_id;
     $pick_up_date = $request->pick_up_date;
@@ -221,12 +239,14 @@ class MainWebsiteController extends Controller
 
     $terms = RentalTerm::all();
 
-    return view ('website.payment', compact('additional_driver_name', 'additional_license_number', 'additional_issuing_country', 'child_seat', 'vehicle_id', 'pick_up_date', 'return_date', 'terms'));
+    return view ('website.payment', compact('additional_driver_name', 'additional_license_number', 'additional_issuing_country',  'vehicle_id', 'pick_up_date', 'return_date', 'terms', 'selected_extras', 'total_price'));
 
 }
 
 
 public function confirm(Request $req){
+
+
 
         // Validate that the checkbox for accepting terms is checked
         if (!$req->has('accept_terms')) {
@@ -254,17 +274,11 @@ public function confirm(Request $req){
 
        
         
-        if($req-> child_seat=='Yes'){
-            $child_seat = 1;
-        }else{
-            $child_seat =0;
-        }
+       
 
         $user = Auth::guard('customers')->user();
 
-        $vehicle= Vehicle::where('vehicle_id', $vehicle_id)->first();
-        $rental_days = $pick_up_date->diffInDays($return_date) + 1; // +1 to include the pickup day
-        $total_price = $rental_days * $vehicle->daily_rate;
+       $total_price= $req->total_price;
 
 
         if($payment_type=="full_payment"){
@@ -289,7 +303,6 @@ public function confirm(Request $req){
         $reservation->status ='confirmed';
         $reservation->vehicle_id = $vehicle_id;
         $reservation -> customer_id = $user->customer_id;
-        $reservation->child_seat = $child_seat;
         $reservation->reservation_date = now()->toDateString();
 
         $reservation->save();
@@ -322,6 +335,13 @@ public function confirm(Request $req){
             $additional_driver->save();
         }
 
+
+
+        $selected_extras = json_decode($req->selected_extras, true); // Use true to get it as an array
+        // Store each selected extra for the reservation
+        foreach ($selected_extras as $extra_id) {
+            $reservation->extras()->attach($extra_id);
+        }
 
 
         //return redirect('/homepage')->with('success', 'Reservation created successfully!');

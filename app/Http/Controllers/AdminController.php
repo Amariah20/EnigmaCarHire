@@ -831,6 +831,10 @@ class AdminController extends Controller
 
         $extra= Extra::where('extra_id', $extra_id)->first();
 
+       /** if ($extra->extra_name == 'Additional Driver') {
+            return redirect()->back()->withErrors(['error' => 'You cannot delete the "Additional Driver" extra.']);
+        }*/
+
         $extra->delete();
 
         return redirect()->back()->with('success', 'Additional Item Deleted Successfully');

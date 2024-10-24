@@ -25,25 +25,22 @@
     @csrf
     
     <div class="container">
-        <div class="row">
-            <!-- Child Seat Option -->
-            <div class="col-12 col-md-6 mb-3">
-                <div class="form-check">
-                    <input type="checkbox" id="child_seat" name="add_ons[]" value="child_seat" 
-                    class="form-check-input" {{ (is_array(old('add_ons')) && in_array('child_seat', old('add_ons'))) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="child_seat">Child Seat ($15)</label>
-                </div>
-            </div>
-            
-            <!-- Additional Driver Option -->
-            <div class="col-12 col-md-6 mb-3">
-                <div class="form-check">
-                    <input type="checkbox" id="additional_driver" name="add_ons[]" value="additional_driver" 
-                    class="form-check-input" {{ (is_array(old('add_ons')) && in_array('additional_driver', old('add_ons'))) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="additional_driver">Additional Driver (Free)</label>
-                </div>
-            </div>
-        </div>
+    <div class="row">
+
+    @foreach($extras as $extra)
+
+    <div class="col-12 col-md-6 mb-3">
+    <div class="form-check">
+        <input type="checkbox" name="extras[]" value="{{$extra->extra_id}}" 
+        class="form-check-input"  {{ (is_array(old('extras')) && in_array($extra->extra_id, old('extras'))) ? 'checked' : '' }}>
+        <label class="form-check-label">{{$extra->extra_name}}, SCR {{number_format($extra->price, 2)}}</label>
+    </div>
+</div>
+
+    @endforeach
+    </div>
+
+    
 
         <!-- Always show additional driver details form -->
         <div id="additional_driver_form" style="margin-top: 20px;">

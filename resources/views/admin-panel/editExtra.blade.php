@@ -3,7 +3,7 @@
 @section('content')
 
   
-<h1 style="text-align:centre"> Add Additional Item </h1>
+<h1 style="text-align:centre"> Edit Additional Item </h1>
 <br>
 
 
@@ -33,8 +33,9 @@
  
   <div class="mb-3">
     <label class="form-label">Additional Item</label>
-    <input type="text" class="form-control" name="extra_name" value="{{$extra->extra_name}}">
-  </div>
+    <input type="text" class="form-control" name="extra_name" value="{{$extra->extra_name}}" 
+            @if($extra->extra_name == 'Additional Driver') disabled @endif>
+    </div>
 
   <div class="mb-3">
     <label class="form-label">Price</label>

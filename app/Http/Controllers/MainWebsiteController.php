@@ -173,6 +173,32 @@ class MainWebsiteController extends Controller
     public function payment(Request $request)
     {
 
+
+
+        $driverName = $request->driver_name;
+        $licenseNumber = $request->license_number;
+        $issuingCountry = $request->issuing_country;
+
+        if ($driverName || $licenseNumber || $issuingCountry) {
+            // Check if all fields are filled
+            if ($driverName && $licenseNumber && $issuingCountry) {
+                // All fields are filled, store the additional driver info
+                $additional_driver_name = $driverName;
+                $additional_license_number = $licenseNumber;
+                $additional_issuing_country = $issuingCountry;
+            } else {
+                // One or two fields are filled, return an error
+                return redirect()->back()
+                    ->withErrors(['error' => 'Please fill in all fields for the additional driver: Driver Name, License Number, and Issuing Country.'])
+                    ->withInput(); // Send old input back to the view
+            }
+        } else {
+            // No fields filled, no action needed
+            $additional_driver_name = null;
+            $additional_license_number = null;
+            $additional_issuing_country = null;
+        }
+
         
         $selected_extras = $request->extras ?? [];
         $total_extras_price = 0;
@@ -193,54 +219,12 @@ class MainWebsiteController extends Controller
         
 
         $total_price += $total_extras_price;
-
-
-         // Store additional driver details if 'additional_driver' is selected. ID of additional driver is 6. 
-        $additional_driver = in_array('6', $selected_extras); 
-
-
-        
-        if ($additional_driver) {
-
-            if($request->driver_name==null || $request->license_number ==null || $request->issuing_country==null){
-
-               
-                return redirect()->back()
-                ->withErrors(['error' => 'Driver name, License Number, and Issuing Country are required when adding an additional driver'])
-                ->withInput(); // Send old input back to the view
-               
-            
-            } else{
-
-                $additional_driver_name = $request->driver_name;
-                $additional_license_number = $request->license_number;
-                $additional_issuing_country = $request->issuing_country;
-                
-            }
-
-        }else{
-
-            $additional_driver_name = null;
-            $additional_license_number = null;
-            $additional_issuing_country = null;
-
-
-        }
-
-        if (!$additional_driver && ($request->driver_name || $request->license_number || $request->issuing_country)) {
-            return redirect()->back()
-                ->withErrors(['error' => 'Please tick the "Additional Driver" box if you wish to enter driver details.'])
-                ->withInput();
-        }
     
-
-   
-    
-    $vehicle_id = $request->vehicle_id;
-    $pick_up_date = $request->pick_up_date;
-    $return_date = $request->return_date;
-    $pick_up_location = $request->pick_up_location;
-    $drop_off_location =$request->drop_off_location;
+        $vehicle_id = $request->vehicle_id;
+        $pick_up_date = $request->pick_up_date;
+        $return_date = $request->return_date;
+        $pick_up_location = $request->pick_up_location;
+        $drop_off_location =$request->drop_off_location;
 
 
     $terms = RentalTerm::all();

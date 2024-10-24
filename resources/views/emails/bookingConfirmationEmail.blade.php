@@ -10,6 +10,7 @@
     <p>Your reservation has been confirmed!</p>
     <h3>Reservation Details:</h3>
     <p>Vehicle: {{$vehicle->vehicle_name}}</p>
+    <p>License Number: {{$vehicle->license_plate}}</p>
     <p>Pickup Date & Time: {{ $reservation->pick_up }}</p>
     <p>Pickup Location: {{ $pickupLocation->location_name }}, {{ $pickupLocation->address }}</p>
     <p>Return Date & Time: {{ $reservation->return }}</p>

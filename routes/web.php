@@ -73,6 +73,13 @@ Route::get('/deleteRentalTerm/{rental_terms_id}', [AdminController::class, 'dele
 Route::get('/editRentalTerm/{rental_terms_id}', [AdminController::class, 'editRentalTerm'])->name('editRentalTerm');
 Route::post('/storeEditRentalTerm/{rental_terms_id}', [AdminController::class, 'storeEditRentalTerm'])->name('storeEditRentalTerm');
 
+Route::get('/extras', [AdminController::class, 'showExtras'])->name('extras');
+Route::get('/addExtra', [AdminController::class, 'addExtra'])->name('addExtra');
+Route::post('/storeExtra', [AdminController::class, 'storeExtra'])->name('storeExtra');
+Route::get('/deleteExtra/{extra_id}', [AdminController::class, 'deleteExtra'])->name('deleteExtra');
+Route::get('/editExtra/{extra_id}', [AdminController::class, 'editExtra'])->name('editExtra');
+Route::post('/storeEditExtra/{extra_id}', [AdminController::class, 'storeEditExtra'])->name('storeEditExtra');
+
 
 
 

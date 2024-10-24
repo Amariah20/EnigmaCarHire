@@ -36,7 +36,7 @@
             <p><strong>Reservation Date:</strong> {{$reservation->reservation_date}}</p>
             <p><strong>Pick-up Location:</strong> {{$reservation->pick_up}}</p>
             <p><strong>Return Location:</strong> {{$reservation->return}}</p>
-            <p><strong>Total Price:</strong> {{$reservation->total_price}}</p>
+            <p><strong>Total Price:</strong> SCR  {{$reservation->total_price}}</p>
             <p><strong>{{ $reservation->child_seat ? 'Yes' : 'No' }}</strong></p>
             <p><strong>Status:</strong> {{$reservation->status}}</p>
             <a href="{{route('editReservation', ['reservation_id'=>$reservation->reservation_id])}}" class="btn btn-primary mt-3">Edit Reservation Details</a>
@@ -77,7 +77,7 @@
         <div class="card-body">
             @if($payment)
                 <p><strong>Payment ID:</strong> {{$payment->payment_id}}</p>
-                <p><strong>Total Price:</strong> {{ $payment->reservation ? $payment->reservation->total_price : 'N/A' }}</p>
+                <p><strong>Total Price:</strong> {{  $payment->reservation ? $payment->reservation->total_price : 'N/A' }}</p>
                 <p><strong>Total Paid:</strong> {{ $payment->total_paid }}</p>
                 <p><strong>Payment Date:</strong> {{$payment->payment_date}}</p>
                 <p><strong>Status:</strong> {{ $payment->status}}</p>

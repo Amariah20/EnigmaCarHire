@@ -11,6 +11,7 @@ use App\Models\Insurance;
 use App\Models\Customer;
 use App\Models\AdditionalDriver;
 use App\Models\RentalTerm;
+use App\Models\Extra;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -775,7 +776,67 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Rental Condition Updated Successfully');
 
 
+    }
+
+
+    public function showExtras(){
+
+        $extras = Extra::all();
+
+        return view ('admin-panel.extras', compact('extras'));
+    }
+
+
+    public function addExtra(){
+
+        return view ('admin-panel.addExtra');
+    }
+
+    public function storeExtra(Request $req){
+
+        $extra = new Extra();
+        $extra->extra_name = $req->extra_name;
+        $extra->price= $req->price;
+        $extra->save();
+
+        return redirect()->back()->with('success', 'Additional Item Added Successfully');
+
 
     }
+
+
+    public function editExtra($extra_id){
+        $extra = Extra::where('extra_id', $extra_id)->first();
+      
+        return view ('admin-panel.editExtra', compact('extra'));
+    }
+
+    public function storeEditExtra(Request $req, $extra_id){
+
+        $extra = Extra::where('extra_id', $extra_id)->first();
+
+
+        $extra -> extra_name = $req->extra_name;
+        $extra->price =$req->price;
+
+        $extra->update();
+
+        return redirect()->back()->with('success', 'Additional Item Updated Successfully');
+
+
+    }
+
+
+    public function deleteExtra($extra_id){
+
+        $extra= Extra::where('extra_id', $extra_id)->first();
+
+        $extra->delete();
+
+        return redirect()->back()->with('success', 'Additional Item Deleted Successfully');
+
+    }
+
+
 
 }

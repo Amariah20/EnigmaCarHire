@@ -92,6 +92,8 @@
             <a href="{{route('maintenances')}}"><i class="bi bi-tools"></i> Maintenance</a>
             <a href="{{route('insurances')}}"><i class="bi bi-shield-shaded"></i>Insurance</a>
             <a href="{{route('rental_terms')}}"><i class="bi bi-file-earmark-text-fill"></i>Rental Terms</a>
+            <a href="{{route('extras')}}"><i class="bi bi-check-circle-fill"></i>Additional Items</a>
+
 
 
             <div class="dropdown">

@@ -34,5 +34,12 @@ class Reservation extends Model
     }
 
 
+    public function extras()
+    {
+        return $this->belongsToMany(Extra::class, 'extra_reservation', 'reservation_id', 'extra_id');
+    }
+
+
+
 
 }

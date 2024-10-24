@@ -34,8 +34,10 @@
             <p><strong>Vehicle ID:</strong> {{$reservation->vehicle_id}}</p>
             <p><strong>Vehicle Name:</strong> {{ $reservation->vehicle ? $reservation->vehicle->vehicle_name : 'N/A' }}</p>
             <p><strong>Reservation Date:</strong> {{$reservation->reservation_date}}</p>
-            <p><strong>Pick-up Location:</strong> {{$reservation->pick_up}}</p>
-            <p><strong>Return Location:</strong> {{$reservation->return}}</p>
+            <p><strong>Collection Date:</strong> {{$reservation->pick_up}}</p>
+            <p><strong>Collection Location:</strong> {{ $reservation->pickupLocation ? $reservation->pickupLocation->location_name : 'N/A' }}</p>
+            <p><strong>Return Date:</strong> {{$reservation->return}}</p>
+            <p><strong>Return Location:</strong> {{ $reservation->dropoffLocation ? $reservation->dropoffLocation->location_name : 'N/A' }}</p>
             <p><strong>Total Price:</strong> SCR  {{$reservation->total_price}}</p>
             <p><strong>Status:</strong> {{$reservation->status}}</p>
             <a href="{{route('editReservation', ['reservation_id'=>$reservation->reservation_id])}}" class="btn btn-primary mt-3">Edit Reservation Details</a>

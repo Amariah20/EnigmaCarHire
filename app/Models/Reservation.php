@@ -39,6 +39,16 @@ class Reservation extends Model
         return $this->belongsToMany(Extra::class, 'extra_reservation', 'reservation_id', 'extra_id');
     }
 
+    public function pickupLocation()
+    {
+        return $this->belongsTo(Location::class, 'pickup_location_id');
+    }
+
+    public function dropoffLocation()
+    {
+        return $this->belongsTo(Location::class, 'dropoff_location_id');
+    }
+
 
 
 

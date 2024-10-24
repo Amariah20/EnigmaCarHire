@@ -60,25 +60,45 @@
     <input type="date" class="form-control" name="reservation_date" value="{{$reservation->reservation_date}}" readonly>
   </div>
   <div class="mb-3">
-    <label class="form-label">Collection</label>
+    <label class="form-label">Collection Date</label>
     <input type="datetime-local" class="form-control" name="collection" value="{{$reservation->pick_up}}" required>
   </div>
+
   <div class="mb-3">
-    <label class="form-label">Return</label>
+        <label class="form-label">Collection Location</label>
+        <select class="form-control" name="pickup_location_id" required>
+            @foreach($locations as $location)
+                <option value="{{ $location->location_id }}" {{ old('pickup_location_id', $reservation->pickup_location_id) == $location->location_id ? 'selected' : '' }}>
+                    {{ $location->location_name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+
+
+  <div class="mb-3">
+    <label class="form-label">Return Date</label>
     <input type="datetime-local" class="form-control" name="return" value="{{$reservation->return}}" required>
   </div>
+
+  <div class="mb-3">
+        <label class="form-label">Return Location</label>
+        <select class="form-control" name="dropoff_location_id" required>
+            @foreach($locations as $location)
+                <option value="{{ $location->location_id }}" {{ old('dropoff_location_id', $reservation->dropoff_location_id) == $location->location_id ? 'selected' : '' }}>
+                    {{ $location->location_name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
   <div class="mb-3">
     <label class="form-label">Total Price</label> <!--have formula to automatically calculate total price based on vehicle_id (daily rate) & collection & return date-->
     <input type="number" class="form-control" name="total_price" value="{{$reservation->total_price}}" readonly> 
   </div>
 
-  <div class="mb-3">
-    <label class="form-label">Child Seat</label>
-    <select name="child_seat" id="child_seat" class="form-control" required>
-        <option value="1" {{ $reservation->child_seat == 1 ? 'selected' : '' }}>Yes</option>
-        <option value="0" {{ $reservation->child_seat == 0 ? 'selected' : '' }}>No</option>
-    </select>
- </div>
+ 
 
   <div class="mb-3">
         <label class="form-label">Status</label>

@@ -12,6 +12,7 @@ use App\Models\Customer;
 use App\Models\AdditionalDriver;
 use App\Models\RentalTerm;
 use App\Models\Extra;
+use App\Models\Location;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -141,7 +142,7 @@ class AdminController extends Controller
 
     public function showReservations(){
 
-        $reservations = Reservation::with('vehicle','customer', 'additionalDriver')->get();
+        $reservations = Reservation::with(['vehicle', 'customer', 'additionalDriver', 'pickupLocation', 'dropoffLocation'])->get();
         return view('admin-panel.reservations', compact('reservations'));
     }
 
@@ -149,9 +150,10 @@ class AdminController extends Controller
 
         $reservation= Reservation::where('reservation_id', $reservation_id)->first();
         $vehicles = Vehicle::all();
+        $locations =Location::all();
       
 
-        return view('admin-panel.editReservation', compact('reservation', 'vehicles'));
+        return view('admin-panel.editReservation', compact('reservation', 'vehicles', 'locations'));
 
 
 
@@ -171,7 +173,8 @@ class AdminController extends Controller
         $reservation->pick_up = $req->collection;
         $reservation->return = $req->return;
         $reservation->status = $req->status;
-        $reservation->child_seat = $req->child_seat;
+        $reservation->pickup_location_id = $req->pickup_location_id;
+        $reservation->dropoff_location_id = $req->dropoff_location_id;
         
         // Fetch the vehicle to get the daily_rate
         $vehicle = Vehicle::where('vehicle_id', $req->vehicle_id)->first();
@@ -394,7 +397,8 @@ class AdminController extends Controller
     public function viewReservation($reservation_id) { 
 
         
-        $reservation = Reservation::with('additionalDriver', 'payment', 'extras')->where('reservation_id', $reservation_id)->first();
+        $reservation = Reservation::with('additionalDriver', 'payment', 'extras', 'pickupLocation', 'dropoffLocation')->where('reservation_id', $reservation_id)->first();
+
 
         //$reservation = Reservation::find($reservation_id);
     
@@ -836,6 +840,66 @@ class AdminController extends Controller
         }*/
 
         $extra->delete();
+
+        return redirect()->back()->with('success', 'Additional Item Deleted Successfully');
+
+    }
+
+    public function showLocations(){
+
+        $locations = Location::all();
+
+        return view ('admin-panel.locations', compact('locations'));
+    }
+
+
+    public function addLocation(){
+
+        return view ('admin-panel.addLocation');
+    }
+
+    public function storeLocation(Request $req){
+
+        $location = new Location();
+        $location->location_name = $req->location_name;
+        $location->address= $req->address;
+        $location->save();
+
+        return redirect()->back()->with('success', 'Location Added Successfully');
+
+
+    }
+
+
+    public function editLocation($location_id){
+        $location = Location::where('location_id', $location_id)->first();
+      
+        return view ('admin-panel.editLocation', compact('location'));
+    }
+
+    public function storeEditLocation(Request $req, $location_id){
+
+        $location = Location::where('location_id', $location_id)->first();
+
+
+        $location->location_name = $req->location_name;
+        $location->address= $req->address;
+
+        $location->update();
+
+        return redirect()->back()->with('success', 'Location Updated Successfully');
+
+
+    }
+
+
+    public function deleteLocation($location_id){
+
+        $location = Location::where('location_id', $location_id)->first();
+
+       
+
+        $location->delete();
 
         return redirect()->back()->with('success', 'Additional Item Deleted Successfully');
 

@@ -35,7 +35,9 @@
       <th scope="col">Vehicle Name </th>
       <th scope="col">Reservation Date</th>
       <th scope="col">Collection</th>
+      <th scope="col">Collection Location</th>
       <th scope="col">Return</th>
+      <th scope="col">Return Location</th>
       <th scope="col">Total Price</th>
       <th scope="col">Child Seat</th>
       <th scope="col">Status</th>
@@ -64,7 +66,9 @@
       <td> {{ $reservation->vehicle ? $reservation->vehicle->vehicle_name : 'N/A' }}</td>
       <td> {{$reservation->reservation_date}}</td>
       <td> {{$reservation->pick_up}}</td>
+      <td>{{ $reservation->pickupLocation ? $reservation->pickupLocation->location_name : 'N/A' }}</td>
       <td> {{$reservation->return}}</td>
+      <td>{{ $reservation->dropoffLocation ? $reservation->dropoffLocation->location_name : 'N/A' }}</td>
       <td> {{ number_format($reservation->total_price,2)}}</td>
       <td>{{ $reservation->child_seat ? 'Yes' : 'No' }}</td>
       <td> {{$reservation->status}}</td>

@@ -80,6 +80,13 @@ Route::get('/deleteExtra/{extra_id}', [AdminController::class, 'deleteExtra'])->
 Route::get('/editExtra/{extra_id}', [AdminController::class, 'editExtra'])->name('editExtra');
 Route::post('/storeEditExtra/{extra_id}', [AdminController::class, 'storeEditExtra'])->name('storeEditExtra');
 
+Route::get('/locations', [AdminController::class, 'showLocations'])->name('locations');
+Route::get('/addLocation', [AdminController::class, 'addLocation'])->name('addLocation');
+Route::post('/storeLocation', [AdminController::class, 'storeLocation'])->name('storeLocation');
+Route::get('/deleteLocation/{location_id}', [AdminController::class, 'deleteLocation'])->name('deleteLocation');
+Route::get('/editLocation/{location_id}', [AdminController::class, 'editLocation'])->name('editLocation');
+Route::post('/storeEditLocation/{location_id}', [AdminController::class, 'storeEditLocation'])->name('storeEditLocation');
+
 
 
 
